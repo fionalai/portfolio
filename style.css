@@ -24,13 +24,23 @@ h3 {
   font-family: 'Poppins', sans-serif;
   font-size: 1.7em;
   color: white;
-  text-align: left;
+  /* text-align: left; */
   padding: 10px 0;
 }
 
 h4 {
   font-family: 'Poppins', sans-serif;
-  font-size: .7em;
+  font-size: 1em;
+  color: white;
+  text-align: left;
+  letter-spacing: 2px;
+  font-weight: 700;
+
+}
+
+h5 {
+  font-family: 'Poppins', sans-serif;
+  font-size: .8em;
   color: white;
   text-align: left;
 
@@ -40,7 +50,6 @@ p {
   font-family: 'Poppins', sans-serif;
   font-size: 1em;
   color: white;
-
 }
 
 #copyright {
@@ -80,10 +89,33 @@ button {
   padding-top: 50px;
 }
 
-footer {
-    padding:50px 0px;
+.about-col {
+  padding: 20px;
 }
 
-ul {
-  list-style-type: none;
+/* tablet and smaller screens */
+@media (max-width: 768px) {
+  .about-img {
+    width: 50%;
+  }
+}
+
+.experience-item {
+  padding: 10px 0;
+}
+
+footer {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+.rogers-hero {
+	background: url("media/furnishr-hero.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	/* background-size: cover; */
+	position: relative;
+	background-attachment: fixed;
+	height: 450px;
+  margin-bottom: 50px;
 }
