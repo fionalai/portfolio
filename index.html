@@ -6,7 +6,7 @@
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=Poppins:wght@300;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="style.css">
@@ -19,10 +19,12 @@
 
     <header>
       <nav>
-        <h1>FIONA LAI</h1>
         <div class="navbar justify-content-center">
-          <a class="current" href="index.html#work">Work</a>
-          <a href="about.html">About</a>
+					<img src="media/fl-logo.png" alt="" width="20%" style="margin-top: 30px;">
+				</div>
+				<div class="navbar justify-content-center">
+          <a class="current nav-link" href="index.html#work">Work</a>
+          <a class="nav-link" href="about.html">About</a>
         </div>
       </nav>
     </header>
@@ -32,9 +34,9 @@
       <div class="works">
         <div class="row justify-content-center">
 
-          <img class="col-md-5" src="media/rogers-home.png" style="border-radius: 10%;">
+					<img onclick="window.location.href='rogerscommunication.html'" class="col-md-5 motion" src="media/rogers-home.png" style="border-radius: 10%;">
 
-          <div class="col-md-5 my-auto">
+          <div class="col-md-5 my-auto indent">
               <h3>Rogers Communication</h3>
               <h5>July 2020 - Present</h5>
               <button type="button" onclick="location.href='rogerscommunication.html'">Learn more</button>
@@ -46,9 +48,9 @@
       <div class="works">
         <div class="row justify-content-center">
 
-          <img class="col-md-5" src="media/rogers-home.png" style="border-radius: 10%;">
+          <img onclick="window.location.href='furnishr.html'" class="col-md-5 motion" src="media/furnishr-home.png" style="border-radius: 10%;">
 
-          <div class="col-md-5 my-auto">
+          <div class="col-md-5 my-auto indent">
               <h3>Furnishr</h3>
               <h5>May 2018 - August 2019</h5>
               <button type="button" onclick="location.href='furnishr.html'">Learn more</button>
@@ -59,13 +61,12 @@
 
       <div class="works">
         <div class="row justify-content-center">
+					<img onclick="window.location.href='something-casual.html'" class="col-md-5 motion" src="media/sc-home.png" style="border-radius: 10%;">
 
-          <img class="col-md-5" src="media/rogers-home.png" style="border-radius: 10%;">
-
-          <div class="col-md-5 my-auto">
+          <div class="col-md-5 my-auto indent">
               <h3>Something Casual</h3>
               <h5>August 2021 - Present</h5>
-              <button type="button" onclick="href="rogerscommunication.html"">Learn more</button>
+              <button type="button" onclick="location.href='something-casual.html'">Learn more</button>
           </div>
 
         </div>
@@ -73,16 +74,15 @@
 
     </div>
 
-    <footer class="container">
-      <h3>Let's connect</h3>
-      <p>something something</p>
-      <div class="row">
-        <p class="col-4">→ Email</p>
-        <p class="col-4">→ Linkedin</p>
-        <p class="col-4">→ Github</p>
-      </div>
-      <p id="copyright">© 2021 Fiona Lai | Made with 💜.</p>
-    </footer>
+		<footer class="container">
+		  <h3>Let's connect</h3>
+		  <div class="row" style="padding: 10px 0;">
+		    <a class="col-4" href="mailto:fionaqylai@gmail.com">💌 Email</a>
+		    <a class="col-4" href="https://www.linkedin.com/in/fionaaalai/">💼 Linkedin</a>
+		    <a class="col-4" href="https://github.com/fionalai">💻 Github</a>
+		  </div>
+		  <p id="copyright">© 2021 Fiona Lai | Made with 💜.</p>
+		</footer>
 
 
     <!-- bootstrap -->
