@@ -158,6 +158,13 @@ mark {
   .about-img {
     width: 50%;
   }
+  .logo {
+    width: 30%;
+  }
+}
+
+.logo {
+  width: 15%;
 }
 
 .experience-item {
