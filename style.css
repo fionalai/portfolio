@@ -134,7 +134,7 @@ button:hover {
   position: relative;
   transition: transform 0.3s ease;
   transform: translateX(0px);
-  box-shadow: 7px 7px 2px #E0E0E0;
+  /* box-shadow: 7px 7px 2px #E0E0E0; */
   padding: 0px; !important;
 
 }
