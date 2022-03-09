@@ -1,7 +1,6 @@
 body {
-  /* background-color: #FDEDEF; */
-  /* background-color: #222222; */
   background-color: white;
+  background-image: url("media/grid.svg");
 }
 
 /* fiona lai */
@@ -9,27 +8,30 @@ h1 {
   margin-top: 50px;
   font-family: 'PT Sans', sans-serif;
   font-weight: 700;
-  font-size: 2.5em;
-  color: #5E3250;
+  font-size: 2.5rem;
+  color: #4330b4;
   text-align: center;
 }
 
-/* fiona lai 2.0 */
+/* softer heading*/
 h2 {
   font-family: 'PT Sans', sans-serif;
   font-weight: 700;
-  font-size: 2em;
-  color: black;
+  font-size: 1.7rem;
+  color: #4330b4;
   text-align: left;
-  padding: 20px;
+  padding: 30px;
+  letter-spacing: 2px;
+  text-align: center;
+
 }
 
 /* section main heading */
 h3 {
   font-family: 'Poppins', sans-serif;
-  font-size: 1.7em;
+  font-size: 1.4rem;
   font-weight: 500;
-  color: #5E3250;
+  color: #4330b4;
   /* text-align: left; */
   padding: 10px 0;
 }
@@ -37,8 +39,9 @@ h3 {
 /* subheading (all caps) */
 h4 {
   font-family: 'Poppins', sans-serif;
-  font-size: 1em;
-  color: #C7A5B7;
+  font-size: 1.2rem;
+  /* color: #c1e2f7; */
+  color: #f0d0e5;
   text-align: left;
   letter-spacing: 2px;
   font-weight: 700;
@@ -48,8 +51,8 @@ h4 {
 /* date or legal text */
 h5 {
   font-family: 'Poppins', sans-serif;
-  font-size: .8em;
-  color: #C7A5B7;
+  font-size: .7rem;
+  color: #4330b4;
   text-align: left;
   padding-bottom: 10px;
   font-weight: 300;
@@ -57,7 +60,7 @@ h5 {
 
 p, ul, ol {
   font-family: 'Poppins', sans-serif;
-  font-size: .9em;
+  font-size: 1rem;
   color: #141414;
   line-height: 30px;
   text-align: left;
@@ -65,59 +68,56 @@ p, ul, ol {
 
 figcaption {
   font-family: 'Poppins', sans-serif;
-  font-size: .8em;
-  color: #C7A5B7;
+  font-size: .5rem;
+  color: #4330b4;
   padding: 10px;
   text-align: center;
 }
 
 a {
   font-family: 'Poppins', sans-serif;
-  font-size: 1em;
-  color: #D38DAB;
+  font-size: 1rem;
+  color: #4330b4;
   font-weight: 300;
 }
 
 a:hover {
   text-decoration: none;
-  color: #5E3250;
-}
-
-.nav-link {
-  margin: 20px;
+  color: #f0d0e5;
 }
 
 #copyright {
   font-family: 'Poppins', sans-serif;
-  font-size: 0.7em;
-  color: #C2C2C2;
+  font-size: .7rem;
+  color: #777B7C;
   font-weight: 300;
   padding: 20px 0;
 }
+
 footer {
   padding-top: 50px;
 }
 
 .current {
   font-family: 'Poppins', sans-serif;
-  font-size: 1em;
   color: #5E3250;
 }
 
 button {
   font-family: 'Poppins', sans-serif;
-  font-size: 0.7em;
-  color: white;
-  background-color: #D38DAB;
-  border: 1px solid;
-  border-radius: 20px;
+  font-size: 0.7rem;
+  background-color: #f0d0e5;
+  color: #4330b4;
+  border: 2px solid #4330b4;
+  border-radius: 12px;
   padding: 10px 20px;
   font-weight: 300;
+  box-shadow: 2px 2px 0 0 #4330b4;
 
 }
 
 button:hover {
-  background-color: #5E3250;
+  background-color: #4330b4;
   color: white;
 }
 
@@ -136,6 +136,8 @@ button:hover {
   transform: translateX(0px);
   /* box-shadow: 7px 7px 2px #E0E0E0; */
   padding: 0px; !important;
+  border: 2px solid #4330b4;
+  box-shadow: 2px 2px 0 0 #4330b4;
 
 }
 .motion:hover {
@@ -160,14 +162,36 @@ mark {
   }
 }
 
-.logo {
-  width: 15%;
+.nav-link {
+  text-align: right;
+  margin: 20px;
+  justify-content: flex-end;
 }
 
-/* tablet and smaller screens */
-@media (max-width: 768px) {
-  .logo {
-    width: 30%;
+#logo {
+  width: 10vh;
+  margin: 20px;
+}
+
+#logo:hover {
+  content: url("media/fl-logo-hover.png");
+  width: 10vh;
+
+}
+
+/* nav responsive */
+@media (max-width: 1000px) {
+  .navbar-nav {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 700px) {
+  .herocontainer img {
+    width: 100vw!important;
+  }
+   .textcontainer {
+    top: 25%!important;
   }
 }
 
@@ -175,14 +199,37 @@ mark {
   padding: 10px 0;
 }
 
+#index {
+ height: 100vh;
+ background-color: #c1e2f7;
+ /* flex-box thing */
+ background-size: cover;
+}
+
+.herocontainer{
+    position: relative;
+    display: inline-block; /* Make the width of box same as image */
+}
+.herocontainer .textcontainer{
+    position: absolute;
+    z-index: 999;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    text-align: left;
+    top: 35%; /* Adjust this value to move the positioned div up and down */
+    width: 55%; /* Set the width of the positioned div */
+}
+
+
 .rogers-hero {
 	background: url("media/rogers-hero.png");
 	background-position: top;
 	background-repeat: no-repeat;
-	/* background-size: cover; */
+	background-size: cover;
 	position: relative;
 	background-attachment: fixed;
-	height: 400px;
+	height: 100vh;
   margin-bottom: 50px;
 }
 
@@ -190,10 +237,10 @@ mark {
 	background: url("media/furnishr-hero.png");
 	background-position: top;
 	background-repeat: no-repeat;
-	/* background-size: cover; */
+	background-size: cover;
 	position: relative;
 	background-attachment: fixed;
-	height: 400px;
+	height: 100vh;
   margin-bottom: 50px;
 }
 
@@ -201,9 +248,9 @@ mark {
 	background: url("media/sc-hero.png");
 	background-position: top;
 	background-repeat: no-repeat;
-	/* background-size: cover; */
+	background-size: cover;
 	position: relative;
 	background-attachment: fixed;
-	height: 400px;
+	height: 100vh;
   margin-bottom: 50px;
 }
