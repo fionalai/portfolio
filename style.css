@@ -108,7 +108,7 @@ button {
   font-size: 0.7rem;
   background-color: #f0d0e5;
   color: #4330b4;
-  border: 2px solid #4330b4;
+  border: 1px solid #4330b4;
   border-radius: 12px;
   padding: 10px 20px;
   font-weight: 300;
@@ -136,7 +136,7 @@ button:hover {
   transform: translateX(0px);
   /* box-shadow: 7px 7px 2px #E0E0E0; */
   padding: 0px; !important;
-  border: 2px solid #4330b4;
+  border: 1px solid #4330b4;
   box-shadow: 2px 2px 0 0 #4330b4;
 
 }
