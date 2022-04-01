@@ -14,7 +14,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 		<!-- fav icon -->
-		<link rel="icon" type="image/x-icon" href="media/fl-logo.png">
+		<link rel="icon" type="image/x-icon" href="media/fav-icon.png">
 
 	</head>
 
@@ -24,88 +24,92 @@
 
 			<nav class="navbar navbar-expand-lg ml-auto sticky-top">
 				<a class="navbar-brand h1" href="index.html">
-			    <img src="media/fl-logo.png" id="logo">
+			    <img src="media/logo-v2.png" id="logo">
 			  </a>
 				<div class="navbar-nav ml-auto">
-					<a class="nav-item nav-link active" href="index.html">Work</a>
-					<a class="nav-item nav-link" href="about.html">About</a>
+					<button type="button" class="nav-item nav-link active" onclick="location.href='index.html#work-section'">WORK</button>
+					<button type="button" class="nav-item nav-link" onclick="location.href='about.html'">ABOUT</button>
 				</div>
 			</nav>
 
 			<div class="container" style="max-width:720px;">
 				<div id="test"class="row align-items-center">
 					<div class="herocontainer">
-						<img src="media/hero-nowords2.png" style="width=75%;">
+						<img src="media/hero-monochrome.png" style="width=100%;">
 
 						<div class="textcontainer">
-							<h1 >hi, i'm fiona</h1>
-							<h3 style="text-align: center;">product designer, something & CS major</h3>
+							<h4>hello i'm</h4>
+							<h1>FIONA LAI</h1>
+							<h4 id="details">product designer, CS major & small business owner</h4>
 						</div>
+
 					</div>
+					<!-- <div class="down-arrow"> -->
+						<a class="down-arrow" href="#work-section"></a>
+					<!-- </div> -->
 				</div>
 
 			</div>
 
-
-
     </header>
+
 		<body>
 
-    <div class="container">
-			<h2> - work experience - </h2>
+    	<div class="container content" id="work-section">
 
-      <div class="works">
-        <div class="row justify-content-center">
+				<h2>*✧･ﾟcase studies ･ﾟ✧*</h2>
 
-					<img onclick="window.location.href='rogerscommunication.html'" class="col-md-5 motion" src="media/rogers-home.png" style="border-radius: 10%;">
+	      <div class="works">
+	        <div class="row justify-content-center">
 
-          <div class="col-md-5 my-auto indent">
-              <h3>Rogers Communications</h3>
-              <h5>// July 2020 - Present //</h5>
-              <button type="button" onclick="location.href='rogerscommunication.html'">Learn more</button>
-          </div>
+						<img onclick="window.location.href='rogerscommunication.html'" class="col-md-5 motion" src="media/rogers-home.png" style="border-radius: 10%;">
 
-        </div>
-      </div>
-      <div class="works">
-        <div class="row justify-content-center">
+	          <div class="col-md-5 my-auto indent">
+	              <h3>Rogers Communications</h3>
+	              <h5>// July 2020 - Present //</h5>
+	              <button type="button" onclick="location.href='rogerscommunication.html'">Learn more</button>
+	          </div>
 
-          <img onclick="window.location.href='furnishr.html'" class="col-md-5 motion" src="media/furnishr-home.png" style="border-radius: 10%;">
+	        </div>
+	      </div>
+	      <div class="works">
+	        <div class="row justify-content-center">
 
-          <div class="col-md-5 my-auto indent">
-              <h3>Furnishr</h3>
-              <h5>// May 2018 - August 2019 //</h5>
-              <button type="button" onclick="location.href='furnishr.html'">Learn more</button>
-          </div>
+	          <img onclick="window.location.href='furnishr.html'" class="col-md-5 motion" src="media/furnishr-home.png" style="border-radius: 10%;">
 
-        </div>
-      </div>
+	          <div class="col-md-5 my-auto indent">
+	              <h3>Furnishr</h3>
+	              <h5>// May 2018 - August 2019 //</h5>
+	              <button type="button" onclick="location.href='furnishr.html'">Learn more</button>
+	          </div>
 
-      <div class="works">
-        <div class="row justify-content-center">
-					<img onclick="window.location.href='something-casual.html'" class="col-md-5 motion" src="media/sc-home.png" style="border-radius: 10%;">
+	        </div>
+	      </div>
+	      <div class="works">
+	        <div class="row justify-content-center">
+						<img onclick="window.location.href='something-casual.html'" class="col-md-5 motion" src="media/sc-home.png" style="border-radius: 10%;">
 
-          <div class="col-md-5 my-auto indent">
-              <h3>Something Casual</h3>
-              <h5>// August 2021 - Present //</h5>
-              <button type="button" onclick="location.href='something-casual.html'">Learn more</button>
-          </div>
+	          <div class="col-md-5 my-auto indent">
+	              <h3>Something Casual</h3>
+	              <h5>// August 2021 - Present //</h5>
+	              <button type="button" onclick="location.href='something-casual.html'">Learn more</button>
+	          </div>
 
-        </div>
-      </div>
+	      	</div>
+	      </div>
 
-    </div>
+    	</div>
 
 		</body>
 
-		<footer class="container">
-		  <h2>- let's connect -</h2>
-		  <div class="row" style="padding: 10px 0;">
-		    <a class="col-4" href="mailto:fionaqylai@gmail.com">💌 &nbsp;&nbsp;&nbsp;Email</a>
-		    <a class="col-4" href="https://www.linkedin.com/in/fionaaalai/">💼 &nbsp;&nbsp;&nbsp;Linkedin</a>
-		    <a class="col-4" href="https://github.com/fionalai">💻 &nbsp;&nbsp;&nbsp;Github</a>
+		<footer class="container-fluid text-center">
+			<h2 style="color: white; text-align: center;">Stories are best told in person. Let's chat! </h2>
+		  <div class="btn-group-vertical">
+		    <button type="button" class="col footerButton" onclick="location.href='mailto:fionaqylai@gmail.com'">💌 &nbsp;&nbsp;&nbsp;fionaqylai@gmail.com</button>
+		    <button type="button" class="col footerButton" onclick="location.href='https://www.linkedin.com/in/fionaaalai/'">💼 &nbsp;&nbsp;&nbsp;linkedin.com/in/fionaaalai</button>
+		    <button type="button" class="col footerButton" onclick="location.href='https://github.com/fionalai'">💻 &nbsp;&nbsp;&nbsp;github.com/fionalai</button>
 		  </div>
-		  <p id="copyright">© 2021 Fiona Lai | Made with 💜.</p>
+			<p id="copyright">© 2021 Fiona Lai | Made with 🤍 + ☕️. | Thank you for visiting!</p>
 		</footer>
 
 
@@ -113,6 +117,4 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </body>
-
 </html>

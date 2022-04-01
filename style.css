@@ -1,27 +1,39 @@
+html {
+  scroll-behavior: smooth;
+}
 body {
   background-color: white;
-  background-image: url("media/grid.svg");
+  /* background-image: url("media/grid.svg"); */
+  /* padding-bottom: 50px; */
+}
+
+@font-face {
+  font-family: arsenica;
+  src: url(media/arsenica/Arsenica-Medium.ttf);
+}
+
+@font-face {
+  font-family: Shocka;
+  src: url(media/shocka_serif/ShockaSerif-Bold.otf);
 }
 
 /* fiona lai */
 h1 {
-  margin-top: 50px;
-  font-family: 'PT Sans', sans-serif;
-  font-weight: 700;
-  font-size: 2.5rem;
-  color: #4330b4;
+  /* margin-top: 50px; */
+  font-family: 'arsenica', serif;
+  font-size: 4rem;
+  color: #202020;
   text-align: center;
 }
 
 /* softer heading*/
 h2 {
-  font-family: 'PT Sans', sans-serif;
+  font-family: 'Shocka', serif;
   font-weight: 700;
   font-size: 1.7rem;
-  color: #4330b4;
+  color: #202020;
   text-align: left;
   padding: 30px;
-  letter-spacing: 2px;
   text-align: center;
 
 }
@@ -31,7 +43,7 @@ h3 {
   font-family: 'Poppins', sans-serif;
   font-size: 1.4rem;
   font-weight: 500;
-  color: #4330b4;
+  color: #202020;
   /* text-align: left; */
   padding: 10px 0;
 }
@@ -39,9 +51,9 @@ h3 {
 /* subheading (all caps) */
 h4 {
   font-family: 'Poppins', sans-serif;
-  font-size: 1.2rem;
+  font-size: 1rem;
   /* color: #c1e2f7; */
-  color: #f0d0e5;
+  color: #255A5C;
   text-align: left;
   letter-spacing: 2px;
   font-weight: 700;
@@ -52,7 +64,7 @@ h4 {
 h5 {
   font-family: 'Poppins', sans-serif;
   font-size: .7rem;
-  color: #4330b4;
+  color: #255A5C;
   text-align: left;
   padding-bottom: 10px;
   font-weight: 300;
@@ -61,15 +73,15 @@ h5 {
 p, ul, ol {
   font-family: 'Poppins', sans-serif;
   font-size: 1rem;
-  color: #141414;
+  color: #202020;
   line-height: 30px;
   text-align: left;
 }
 
 figcaption {
   font-family: 'Poppins', sans-serif;
-  font-size: .5rem;
-  color: #4330b4;
+  font-size: .7rem;
+  color: #255A5C;
   padding: 10px;
   text-align: center;
 }
@@ -77,48 +89,60 @@ figcaption {
 a {
   font-family: 'Poppins', sans-serif;
   font-size: 1rem;
-  color: #4330b4;
+  color: #255A5C;
   font-weight: 300;
+  transition: 0.5s ease-in-out;
 }
 
 a:hover {
   text-decoration: none;
-  color: #f0d0e5;
+  opacity: .5;
+  /* color: #f0d0e5; */
 }
 
 #copyright {
   font-family: 'Poppins', sans-serif;
   font-size: .7rem;
-  color: #777B7C;
+  color: white;
   font-weight: 300;
-  padding: 20px 0;
+  /* padding: 20px 0; */
+  margin: 0 auto;
 }
 
 footer {
-  padding-top: 50px;
+  padding-top: 64px;
+  padding-bottom: 24px;
+  /* background: url(media/background.jpeg);
+  background-size: cover; */
+  background-color: #255A5C;
 }
 
-.current {
-  font-family: 'Poppins', sans-serif;
-  color: #5E3250;
+.footerButton {
+  margin: 8px;
+  background-color: white;
 }
 
 button {
   font-family: 'Poppins', sans-serif;
   font-size: 0.7rem;
-  background-color: #f0d0e5;
-  color: #4330b4;
-  border: 1px solid #4330b4;
+  /* background-color: #f0d0e5; */
+  background-color: transparent;
+  color: #202020;
+  border: 1px solid #202020;
   border-radius: 12px;
-  padding: 10px 20px;
+  padding: 10px 20px !important;
   font-weight: 300;
-  box-shadow: 2px 2px 0 0 #4330b4;
-
+  box-shadow: 2px 2px 0 0 #202020;
+  transition: 0.5s ease-in-out;
 }
 
 button:hover {
-  background-color: #4330b4;
+  background-color: #202020;
   color: white;
+}
+
+.content {
+  padding: 80px;
 }
 
 .works {
@@ -136,8 +160,8 @@ button:hover {
   transform: translateX(0px);
   /* box-shadow: 7px 7px 2px #E0E0E0; */
   padding: 0px; !important;
-  border: 1px solid #4330b4;
-  box-shadow: 2px 2px 0 0 #4330b4;
+  border: 1px solid #202020;
+  box-shadow: 3px 3px 0 0 #202020;
 
 }
 .motion:hover {
@@ -166,6 +190,7 @@ mark {
   text-align: right;
   margin: 20px;
   justify-content: flex-end;
+
 }
 
 #logo {
@@ -173,16 +198,11 @@ mark {
   margin: 20px;
 }
 
-#logo:hover {
-  content: url("media/fl-logo-hover.png");
-  width: 10vh;
-
-}
-
 /* nav responsive */
 @media (max-width: 1000px) {
   .navbar-nav {
     flex-direction: row;
+    margin: 0 auto;
   }
 }
 
@@ -190,9 +210,17 @@ mark {
   .herocontainer img {
     width: 100vw!important;
   }
-   .textcontainer {
-    top: 25%!important;
+   .textcontainer h1{
+    /* top: 25%!important; */
+    font-size: 2.5rem;
   }
+  .textcontainer h4{
+   /* top: 25%!important; */
+   font-size: .7rem;
+ }
+ #details {
+   font-size: .7rem;
+ }
 }
 
 .experience-item {
@@ -201,7 +229,7 @@ mark {
 
 #index {
  height: 100vh;
- background-color: #c1e2f7;
+ background-image: url("media/background.jpeg");
  /* flex-box thing */
  background-size: cover;
 }
@@ -220,6 +248,53 @@ mark {
     top: 35%; /* Adjust this value to move the positioned div up and down */
     width: 55%; /* Set the width of the positioned div */
 }
+#details {
+  text-align: center;
+  font-weight: 300;
+  /* font-size: 1rem; */
+  border: 1px solid #202020;
+  border-radius: 10px;
+  color: #202020;
+  padding: 3px;
+  width: 70%;
+  margin: 0 auto;
+}
+.down-arrow {
+  /* scroll-behavior: smooth; */
+  position: absolute;
+  top: calc(100vh - 80px);
+  left: calc(50% - 14px);
+  width: 0;
+  height: 30px;
+  border: 2px solid;
+  border-radius: 2px;
+  animation: jumpInfinite 1.5s infinite;
+}
+
+.down-arrow:after {
+  content: " ";
+  position: absolute;
+  top: 12px;
+  left: -8px;
+  width: 16px;
+  height: 16px;
+  border-bottom: 4px solid;
+  border-right: 4px solid;
+  border-radius: 3px;
+  transform: rotateZ(45deg);
+}
+
+@keyframes jumpInfinite {
+  0% {
+    margin-top: 0;
+  }
+  50% {
+    margin-top: 20px;
+  }
+  100% {
+    margin-top: 0;
+  }
+}
 
 
 .rogers-hero {
@@ -229,7 +304,7 @@ mark {
 	background-size: cover;
 	position: relative;
 	background-attachment: fixed;
-	height: 100vh;
+	height: 80vh;
   margin-bottom: 50px;
 }
 
@@ -240,7 +315,7 @@ mark {
 	background-size: cover;
 	position: relative;
 	background-attachment: fixed;
-	height: 100vh;
+	height: 80vh;
   margin-bottom: 50px;
 }
 
@@ -251,6 +326,6 @@ mark {
 	background-size: cover;
 	position: relative;
 	background-attachment: fixed;
-	height: 100vh;
+	height: 80vh;
   margin-bottom: 50px;
 }
