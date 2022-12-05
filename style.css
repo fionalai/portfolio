@@ -7,21 +7,11 @@ body {
   /* padding-bottom: 50px; */
 }
 
-@font-face {
-  font-family: arsenica;
-  src: url(media/arsenica/Arsenica-Medium.ttf);
-}
-
-@font-face {
-  font-family: Shocka;
-  src: url(media/shocka_serif/ShockaSerif-Bold.otf);
-}
-
 /* fiona lai */
 h1 {
   /* margin-top: 50px; */
-  font-family: 'arsenica', serif;
-  font-size: 4rem;
+  font-family: 'DM Serif Display', serif;
+  font-size: 5rem;
   color: #202020;
   text-align: center;
   /* color: #F0D0E5 */
@@ -29,7 +19,7 @@ h1 {
 
 /* softer heading*/
 h2 {
-  font-family: 'Shocka', serif;
+  font-family: 'DM Serif Display', serif;
   font-weight: 700;
   font-size: 1.7rem;
   color: #202020;
@@ -41,7 +31,7 @@ h2 {
 
 /* section main heading */
 h3 {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'DM Serif Display', serif;
   font-size: 1.4rem;
   font-weight: 500;
   color: #202020;
@@ -51,19 +41,16 @@ h3 {
 
 /* subheading (all caps) */
 h4 {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 1rem;
   /* color: #c1e2f7; */
   color: #255A5C;
   text-align: left;
-  letter-spacing: 2px;
-  font-weight: 700;
-
 }
 
 /* date or legal text */
 h5 {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: .7rem;
   color: #255A5C;
   text-align: left;
@@ -72,23 +59,24 @@ h5 {
 }
 
 p, ul, ol {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 1rem;
-  color: #202020;
-  line-height: 30px;
+  color: #333333;
+  line-height: 28px;
   text-align: left;
 }
 
 figcaption {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: .7rem;
   color: #255A5C;
-  padding: 10px;
+  padding: 10px 0;
   text-align: center;
+
 }
 
 a {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 1rem;
   color: #255A5C;
   font-weight: 300;
@@ -101,6 +89,10 @@ a:hover {
   /* color: #f0d0e5; */
 }
 
+
+.row {
+  padding: 36px 0;
+}
 #copyright {
   font-family: 'Poppins', sans-serif;
   font-size: .7rem;
@@ -111,7 +103,7 @@ a:hover {
 }
 
 footer {
-  padding-top: 64px;
+  padding-top: 36px;
   padding-bottom: 24px;
   /* background: url(media/background.jpeg);
   background-size: cover; */
@@ -142,8 +134,33 @@ button:hover {
   color: white;
 }
 
+.specialList {
+  /* border: 1px solid #255A5C; */
+  /* box-shadow: 2px 2px 0 0 #255A5C; */
+
+  background-color: #f2f2f2;
+  border-radius: 16px;
+  padding: 32px 32px;
+  align-items: center;
+  text-align: center;
+  /* making specialList containers height equal */
+  display: table-cell;
+}
+
+/* making specialList containers height equal */
+.col-md-4, .col-md-3 {
+  display: table;
+}
+
+@media only screen and (max-width: 890px) {
+  .col-md-4, .col-md-3 {
+    /* display: table; */
+    padding: 8px;
+  }
+}
+
 .content {
-  padding: 80px;
+  padding: 80px 0;
 }
 
 .works {
@@ -176,8 +193,20 @@ button:hover {
 img {
   margin-top: 10px;
 }
+
+/* highlight */
 mark {
-  background-color: #fee0df;
+  background: linear-gradient(120deg, #a6d2d4 0%, #a6d2d4 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 40%;
+  background-position: 0 90%;
+}
+
+/* change container size to be more narrow */
+@media (min-width: 1200px) {
+  .container {
+    width: 900px;
+  }
 }
 
 /* tablet and smaller screens */
@@ -195,7 +224,7 @@ mark {
 }
 
 #logo {
-  width: 10vh;
+  width: 6vh;
   margin: 20px;
 }
 
@@ -203,43 +232,60 @@ mark {
 @media (max-width: 1000px) {
   .navbar-nav {
     flex-direction: row;
-    margin: 0 auto;
   }
 }
 
-@media (max-width: 700px) {
+/* @media (max-width: 700px) {
   .herocontainer img {
     width: 100vw!important;
   }
    .textcontainer h1{
-    /* top: 25%!important; */
     font-size: 2.5rem;
   }
   .textcontainer h4{
-   /* top: 25%!important; */
    font-size: .7rem;
  }
  #details {
    font-size: .7rem;
  }
-}
+} */
 
-.experience-item {
-  padding: 10px 0;
-}
 
 #index {
- height: 100vh;
+ /* height: 100vh;
  background-image: url("media/background.jpeg");
  /* flex-box thing */
- background-size: cover;
+ background-size: cover; */
 }
+
+.css-selector {
+    height: 100vh;
+    /* flex-box thing */
+    background-size: cover;
+    background: linear-gradient(270deg,#f0c4ec, #97dfc9, #b9cbf0, #9cb4e4);
+    background-size: 1000% 1000%;
+
+    -webkit-animation: gradient_animator 13s ease infinite;
+    animation: gradient_animator 13s ease infinite;
+}
+
+@-webkit-keyframes gradient_animator {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes gradient_animator {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
 
 .herocontainer{
     position: relative;
     display: inline-block; /* Make the width of box same as image */
 }
-.herocontainer .textcontainer{
+.herocontainer { /*used to have .textcontainer */
     position: absolute;
     z-index: 999;
     margin: 0 auto;
@@ -249,6 +295,11 @@ mark {
     top: 35%; /* Adjust this value to move the positioned div up and down */
     width: 55%; /* Set the width of the positioned div */
 }
+
+.textcontainer {
+  text-align: center!important;
+}
+
 #details {
   text-align: center;
   font-weight: 300;
