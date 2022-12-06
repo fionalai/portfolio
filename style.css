@@ -135,9 +135,6 @@ button:hover {
 }
 
 .specialList {
-  /* border: 1px solid #255A5C; */
-  /* box-shadow: 2px 2px 0 0 #255A5C; */
-
   background-color: #f2f2f2;
   border-radius: 16px;
   padding: 32px 32px;
@@ -176,7 +173,6 @@ button:hover {
   position: relative;
   transition: transform 0.3s ease;
   transform: translateX(0px);
-  /* box-shadow: 7px 7px 2px #E0E0E0; */
   padding: 0px; !important;
   border: 1px solid #202020;
   box-shadow: 3px 3px 0 0 #202020;
@@ -214,6 +210,13 @@ mark {
   .about-img {
     width: 50%;
   }
+  .works {
+    width: 90%;
+    margin: 0 auto;
+  }
+  .figma-cursor, .figma-cursor-index {
+    right: 0%!important;
+  }
 }
 
 .nav-link {
@@ -233,29 +236,6 @@ mark {
   .navbar-nav {
     flex-direction: row;
   }
-}
-
-/* @media (max-width: 700px) {
-  .herocontainer img {
-    width: 100vw!important;
-  }
-   .textcontainer h1{
-    font-size: 2.5rem;
-  }
-  .textcontainer h4{
-   font-size: .7rem;
- }
- #details {
-   font-size: .7rem;
- }
-} */
-
-
-#index {
- /* height: 100vh;
- background-image: url("media/background.jpeg");
- /* flex-box thing */
- background-size: cover; */
 }
 
 .css-selector {
@@ -400,6 +380,15 @@ mark {
   right: 8%;
   top: 45%;
   animation: 20s hover infinite;
+  z-index: 1;
+}
+
+.figma-cursor-index {
+  position: absolute;
+  right: 12%;
+  top: 45%;
+  animation: 20s hover infinite;
+  z-index: 1;
 }
 
 @keyframes hover {
