@@ -35,8 +35,7 @@ h3 {
   font-size: 1.4rem;
   font-weight: 500;
   color: #202020;
-  /* text-align: left; */
-  padding: 10px 0;
+  /* padding: 10px 0; */
 }
 
 /* subheading (all caps) */
@@ -58,10 +57,19 @@ h5 {
   font-weight: 300;
 }
 
-p, ul, ol {
+h6 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: .9rem;
+  color: #202020;
+  text-align: left;
+  padding-bottom: 10px;
+  font-weight: 300;
+}
+
+p, ul, ol, li {
   font-family: 'DM Sans', sans-serif;
   font-size: 1rem;
-  color: #333333;
+  color: #202020;
   line-height: 28px;
   text-align: left;
 }
@@ -80,15 +88,13 @@ a {
   font-size: 1rem;
   color: #255A5C;
   font-weight: 300;
-  transition: 0.5s ease-in-out;
+  /* text-decoration: underline; */
 }
 
 a:hover {
   text-decoration: none;
-  opacity: .5;
-  /* color: #f0d0e5; */
+  opacity: .8;
 }
-
 
 .row {
   padding: 36px 0;
@@ -130,8 +136,11 @@ button {
 }
 
 button:hover {
-  background-color: #202020;
-  color: white;
+  box-shadow: 0px 0px 0 0 #202020;
+}
+
+button:active{
+  border: #202020;
 }
 
 .specialList {
@@ -182,6 +191,16 @@ button:hover {
  transform: translateX(10px);
 }
 
+.learnmore{
+  position: relative;
+  transition: transform 0.3s ease;
+  transform: translateX(0px);
+}
+.learnmore:hover {
+ transform: translateX(10px) !important;
+}
+
+
 .indent {
   margin-left: 20px;
 }
@@ -227,7 +246,7 @@ mark {
 }
 
 #logo {
-  width: 5vh;
+  width: 3vh;
   margin: 20px;
 }
 
@@ -330,8 +349,8 @@ mark {
 
 
 .rogers-hero {
-	background: url("media/rogers-hero.png");
-	background-position: top;
+	background: url("media/rogers-hero-test.png");
+	background-position: bottom;
 	background-repeat: no-repeat;
 	background-size: cover;
 	position: relative;
@@ -341,7 +360,7 @@ mark {
 }
 
 .furnishr-hero {
-	background: url("media/furnishr-hero.png");
+	background: url("media/furnishr-hero-test.png");
 	background-position: top;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -352,7 +371,7 @@ mark {
 }
 
 .sc-hero {
-	background: url("media/sc-hero.png");
+	background: url("media/sc-hero-test.png");
 	background-position: top;
 	background-repeat: no-repeat;
 	background-size: cover;
