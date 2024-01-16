@@ -114,6 +114,8 @@ footer {
   /* background: url(media/background.jpeg);
   background-size: cover; */
   background-color: #255A5C;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .footerButton {
