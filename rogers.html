@@ -18,6 +18,15 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;1,400;1,500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 
+		<!-- add nav and footer -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+		<script>
+				$(function(){
+						$("#nav").load("nav.html");
+						$("#footer").load("footer.html");
+				});
+		</script>
+		
 	</head>
 
 
@@ -36,15 +45,8 @@
     <header>
       <div class="rogers-hero">
 
-			<nav class="navbar navbar-expand-lg ml-auto sticky-top">
-				<a class="navbar-brand h1" href="index.html">
-			    <img src="media/fl.png" id="logo">
-			  </a>
-				<div class="navbar-nav ml-auto">
-					<button type="button" class="nav-item nav-link active" onclick="location.href='index.html#work-section'">WORK</button>
-					<button type="button" class="nav-item nav-link" onclick="location.href='about.html'">ABOUT</button>
-				</div>
-			</nav>
+			<div id="nav"></div>
+
 
     </div>
     </header>
@@ -55,7 +57,7 @@
 		<div class="col-md-4">
 
 			<h3>Tools:</h3>
-			<p> 
+			<p>
 				Sketch, Abstract, Miro, Adobe Photoshop, Adobe Illustrator
       </p>
 
@@ -392,21 +394,35 @@
 	</div>
 </div>
 
-<footer class="container-fluid text-center">
-	<h2 style="color: white; text-align: center;">Stories are best told in person. Let's chat! </h2>
-	<div class="btn-group-vertical">
-		<button type="button" class="col footerButton" onclick="location.href='mailto:fionaqylai@gmail.com'">💌 &nbsp;&nbsp;&nbsp;fionaqylai@gmail.com</button>
-		<button type="button" class="col footerButton" onclick="location.href='https://www.linkedin.com/in/fionaaalai/'">💼 &nbsp;&nbsp;&nbsp;linkedin.com/in/fionaaalai</button>
-		<button type="button" class="col footerButton" onclick="location.href='https://github.com/fionalai'">💻 &nbsp;&nbsp;&nbsp;github.com/fionalai</button>
-	</div>
-	<br><br>
-	<p id="copyright">© 2021 Fiona Lai | This portoflio runs on 🎶 and ☕️ | Thank you for visiting!</p>
-</footer>
+<div id="footer"></div>
+
 
 		<!-- js -->
 		<script type="text/javascript" src="js/reveal.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>
+
+		<script>
+		// Use fetch to load the content of nav.html
+		fetch('nav.html')
+				.then(response => response.text())
+				.then(data => {
+						// Append the content to the placeholder
+						document.getElementById('nav').innerHTML = data;
+				})
+				.catch(error => console.error('Error loading nav:', error));
+
+		 // Use fetch to load the content of footer.html
+		 fetch('footer.html')
+				 .then(response => response.text())
+				 .then(data => {
+						 // Append the content to the placeholder
+						 document.getElementById('footer').innerHTML = data;
+				 })
+				 .catch(error => console.error('Error loading footer:', error));
+		</script>
+
+
   </body>
 </html>

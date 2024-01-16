@@ -38,7 +38,7 @@
 	</script>
 
   <body>
-		<div id="header"></div>
+		<div id="nav"></div>
 
 
     <div class="container">
@@ -95,14 +95,14 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 		<script>
-		// Use fetch to load the content of header.html
-		fetch('header.html')
+		// Use fetch to load the content of nav.html
+		fetch('nav.html')
 				.then(response => response.text())
 				.then(data => {
 						// Append the content to the placeholder
-						document.getElementById('header').innerHTML = data;
+						document.getElementById('nav').innerHTML = data;
 				})
-				.catch(error => console.error('Error loading footer:', error));
+				.catch(error => console.error('Error loading nav:', error));
 
 		 // Use fetch to load the content of footer.html
 		 fetch('footer.html')
