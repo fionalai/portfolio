@@ -15,16 +15,25 @@
 		<!-- fav icon -->
 		<link rel="icon" type="image/x-icon" href="media/fl-fav.png">
 
+		<!-- add nav and footer -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+		<script>
+				$(function(){
+						$("#nav").load("nav.html");
+						$("#footer").load("footer.html");
+				});
+		</script>
+
 	</head>
 
-	
+
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-DCXZ6F7P3W"></script>
 	<script>
 	  window.dataLayer = window.dataLayer || [];
 	  function gtag(){dataLayer.push(arguments);}
 	  gtag('js', new Date());
-	
+
 	  gtag('config', 'G-DCXZ6F7P3W');
 	</script>
 
@@ -32,15 +41,8 @@
     <header>
 
 			<div class="furnishr-hero">
-				<nav class="navbar navbar-expand-lg ml-auto sticky-top">
-					<a class="navbar-brand h1" href="index.html">
-				    <img src="media/fl.png" id="logo">
-				  </a>
-					<div class="navbar-nav ml-auto">
-						<button type="button" class="nav-item nav-link active" onclick="location.href='index.html#work-section'">WORK</button>
-						<button type="button" class="nav-item nav-link" onclick="location.href='about.html'">ABOUT</button>
-					</div>
-				</nav>
+				<div id="nav"></div>
+
 	    </div>
 
     </header>
