@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Booking Flow for Luxury Spas & Resorts — Fiona Lai</title>
+  <meta name="description" content="How Fiona Lai designed the first multi-day booking flow for luxury spas and resorts — reducing errors by 53% and securing a major enterprise client." />
+  <meta property="og:title" content="Booking Flow for Luxury Spas & Resorts — Fiona Lai" />
+  <meta property="og:description" content="Designing Agilysys's first multi-day booking experience — reducing errors by up to 53%, eliminating support load, and securing a major enterprise client." />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="icon" href="assets/global/favicon.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #FBF8F5;
+      --fg: #111111;
+      --fg-muted: #666666;
+      --border: #EADAE0;
+      --card-bg: #FFFFFF;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --serif: 'DM Serif Display', Georgia, serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: sticky;
+      top: 1rem;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: none;
+      padding: 0 1.5rem;
+      border-bottom: none;
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.375rem;
+      color: var(--fg);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.125rem;
+      list-style: none;
+      background: rgba(0,0,0,0.06);
+      border-radius: 100px;
+      padding: 0.5rem;
+      position: relative;
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      color: var(--fg-muted);
+      text-decoration: none;
+      padding: 0.65rem 1.35rem;
+      border-radius: 100px;
+      transition: color 0.2s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav-links a:hover { color: var(--fg); background: none; }
+    .nav-indicator { position: absolute; background: var(--card-bg); border-radius: 100px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); pointer-events: none; z-index: 0; transition: left 0.22s cubic-bezier(0.4,0,0.2,1), width 0.22s cubic-bezier(0.4,0,0.2,1), opacity 0.15s; }
+
+    .cs-hero {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 5rem 3rem 3.5rem;
+    }
+
+    .cs-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-size: 0.8125rem;
+      color: var(--fg-muted);
+      text-decoration: none;
+      margin-bottom: 2.5rem;
+      transition: color 0.2s;
+    }
+
+    .cs-back:hover { color: var(--fg); }
+
+    .cs-meta {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .tag {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+    }
+    .tag:nth-child(1) { border: 1px solid #F0B8D0; color: #5F1D3E; background: #FFD6EB; }
+    .tag:nth-child(2) { border: 1px solid #E8E090; color: #5A4000; background: #FFF5B4; }
+    .tag:nth-child(3) { border: 1px solid #A0C8DC; color: #0E2840; background: #CAE4EF; }
+
+    .cs-hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      max-width: 760px;
+      margin-bottom: 1.5rem;
+    }
+
+    .cs-hero-sub {
+      font-size: 1.0625rem;
+      color: var(--fg-muted);
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    .cs-overview {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 3rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cs-ov-item label {
+      display: block;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-bottom: 0.375rem;
+    }
+
+    .cs-ov-item span {
+      font-size: 0.9375rem;
+      font-weight: 400;
+    }
+
+    /* Impact bar */
+    .impact-bar {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 3rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .impact-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .impact-number {
+      font-family: var(--serif);
+      font-size: 2.25rem;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
+    }
+
+    .impact-label {
+      font-size: 0.875rem;
+      color: var(--fg-muted);
+      line-height: 1.4;
+    }
+
+    .cs-body {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 3rem;
+    }
+
+    .cs-section {
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cs-section:last-child { border-bottom: none; }
+
+    .cs-section-label {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .cs-section h2 {
+      font-family: var(--serif);
+      font-size: 1.75rem;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 1.25rem;
+    }
+
+    .cs-section p {
+      font-size: 1rem;
+      color: var(--fg-muted);
+      line-height: 1.75;
+      max-width: 680px;
+      margin-bottom: 1.25rem;
+    }
+
+    .cs-section p:last-child { margin-bottom: 0; }
+
+    .callout {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem 2rem;
+      margin: 2rem 0;
+    }
+
+    .callout p {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-style: italic;
+      color: var(--fg);
+      line-height: 1.5;
+      max-width: 100%;
+      margin: 0;
+    }
+
+    .cs-figure {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin: 2rem 0;
+    }
+
+    .cs-figure-visual {
+      padding: 3rem;
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cs-figure-caption {
+      padding: 1rem 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.8125rem;
+      color: var(--fg-muted);
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .process-step {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .step-num {
+      font-family: var(--serif);
+      font-size: 2rem;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+
+    .process-step h3 {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .process-step p {
+      font-size: 0.875rem;
+      line-height: 1.6;
+      max-width: 100%;
+    }
+
+    .research-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .research-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .research-card-label {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .research-card h3 {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+      line-height: 1.35;
+    }
+
+    .research-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .research-card li {
+      font-size: 0.875rem;
+      color: var(--fg-muted);
+      line-height: 1.5;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .research-card li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--fg);
+    }
+
+    .outcome-list {
+      list-style: none;
+      margin: 1.5rem 0;
+    }
+
+    .outcome-list li {
+      display: flex;
+      gap: 0.875rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9375rem;
+      color: var(--fg-muted);
+      line-height: 1.6;
+    }
+
+    .outcome-list li:last-child { border-bottom: none; }
+
+    .outcome-list li::before {
+      content: '→';
+      color: var(--fg);
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .ab-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .ab-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .ab-card.winner {
+      border-color: var(--fg);
+    }
+
+    .ab-label {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .ab-winner-badge {
+      background: var(--fg);
+      color: var(--bg);
+      font-size: 0.6rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 100px;
+      letter-spacing: 0.08em;
+    }
+
+    .ab-card h3 {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .ab-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.375rem;
+    }
+
+    .ab-card li {
+      font-size: 0.875rem;
+      color: var(--fg-muted);
+      line-height: 1.5;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .ab-card li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--fg-muted);
+    }
+
+    .cs-next {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 3rem 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .cs-next-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .cs-next h3 {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+    }
+
+    .cs-next a {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--fg);
+      text-decoration: none;
+      padding: 0.75rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      transition: all 0.2s;
+    }
+
+    .cs-next a:hover { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+
+    footer {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .footer-left {
+      font-family: var(--serif);
+      font-size: 0.9375rem;
+      color: var(--fg-muted);
+    }
+
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+    .footer-links a { font-size: 0.8125rem; color: var(--fg-muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--fg); }
+
+    .nda-note {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.875rem 1.25rem;
+      font-size: 0.8125rem;
+      color: var(--fg-muted);
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 768px) {
+      nav { top: 0.75rem; }
+      .cs-hero { padding: 3rem 1.5rem 2.5rem; }
+      .cs-overview { grid-template-columns: repeat(2, 1fr); padding: 2rem 1.5rem; }
+      .impact-bar { grid-template-columns: 1fr; padding: 2rem 1.5rem; }
+      .cs-body { padding: 0 1.5rem; }
+      .process-steps { grid-template-columns: 1fr; }
+      .research-grid { grid-template-columns: 1fr; }
+      .ab-grid { grid-template-columns: 1fr; }
+      .cs-next { flex-direction: column; align-items: flex-start; padding: 3rem 1.5rem; }
+      footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Fiona Lai</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Work</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="about.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="cs-hero">
+    <a href="index.html" class="cs-back">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11 7H3M7 3L3 7l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      All work
+    </a>
+
+    <div class="cs-meta">
+      <span class="tag">UX Design</span>
+      <span class="tag">Booking Flow</span>
+      <span class="tag">0-to-1</span>
+    </div>
+
+    <h1>The first multi-day booking flow luxury resorts could actually trust</h1>
+    <p class="cs-hero-sub">Designing Agilysys's first multi-day booking experience — reducing errors by up to 53%, eliminating support load, and securing a major resort group as the first of a new enterprise sales category.</p>
+  </div>
+
+  <div class="cs-overview">
+    <div class="cs-ov-item">
+      <label>Company</label>
+      <span>Agilysys (Book4Time)</span>
+    </div>
+    <div class="cs-ov-item">
+      <label>Role</label>
+      <span>Lead Product Designer</span>
+    </div>
+    <div class="cs-ov-item">
+      <label>Scope</label>
+      <span>Research, UX, Design system</span>
+    </div>
+  </div>
+
+  <div class="impact-bar">
+    <div class="impact-item">
+      <div class="impact-number">40–53%</div>
+      <div class="impact-label">Fewer booking errors</div>
+    </div>
+    <div class="impact-item">
+      <div class="impact-number">57%</div>
+      <div class="impact-label">Fewer support tickets</div>
+    </div>
+    <div class="impact-item">
+      <div class="impact-number">1st</div>
+      <div class="impact-label">Major resort group secured — establishing multi-day booking as a sales differentiator for future enterprise deals</div>
+    </div>
+  </div>
+
+  <div class="cs-body">
+
+    <!-- CONTEXT -->
+    <div class="cs-section">
+      <p class="cs-section-label">01 — Context</p>
+      <h2>A platform that couldn't keep up with its own customers</h2>
+      <p>Agilysys (formerly Book4Time) powers spa, wellness, and hospitality operations across luxury resort properties worldwide. But the platform had a critical gap: it only supported single-day appointments. Guests booking multi-day wellness retreats — common at high-end resorts — had no way to plan their full stay in one session.</p>
+      <p>The result was accidental double-bookings, excessive staff workload resolving scheduling conflicts, and lost revenue from empty activity slots. The bottleneck was preventing the business from winning enterprise clients who required it.</p>
+
+      <div class="callout">
+        <p style="font-size:0.6875rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--fg-muted);font-family:var(--sans);font-style:normal;margin-bottom:0.75rem;">From competitor audit</p>
+        <p>Every competitor had the same failure point: conflict detection surfaced at checkout, after the guest had already committed to an itinerary. The opportunity was to move it upstream — to the moment of selection, before any commitment was made.</p>
+      </div>
+    </div>
+
+    <!-- PROBLEM -->
+    <div class="cs-section">
+      <p class="cs-section-label">02 — Problem</p>
+      <h2>Two problems, one broken experience</h2>
+      <p>The booking failure had a user side and a business side — and they were feeding each other.</p>
+
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-num">User</div>
+          <h3>Lost mid-booking</h3>
+          <p>Guests couldn't track what they'd already booked across multiple days, triggering constant back-navigation and front-desk calls to complete reservations.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">Business</div>
+          <h3>Compounding errors</h3>
+          <p>No multi-day support meant double-bookings, empty slots, and a high-touch manual conflict resolution process that couldn't scale to enterprise clients.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESEARCH -->
+    <div class="cs-section">
+      <p class="cs-section-label">03 — Research</p>
+      <h2>Grounding decisions in operations, not assumptions</h2>
+      <p>I combined qualitative shadowing with quantitative session analysis to diagnose root causes — not just symptoms.</p>
+
+      <div class="research-grid">
+        <div class="research-card">
+          <p class="research-card-label">Staff interviews</p>
+          <h3>5 interviews with ops teams</h3>
+          <ul>
+            <li>Revenue lost to accidental double-bookings</li>
+            <li>Real-time conflict detection flagged as critical</li>
+            <li>High manual resolution rate forced onto staff daily</li>
+          </ul>
+        </div>
+        <div class="research-card">
+          <p class="research-card-label">Session replay</p>
+          <h3>8 recorded booking sessions</h3>
+          <ul>
+            <li>Users couldn't recall what they'd already booked</li>
+            <li>Constant back-navigation throughout the flow</li>
+            <li>Clear need for a persistent, always-visible itinerary</li>
+          </ul>
+        </div>
+        <div class="research-card">
+          <p class="research-card-label">Competitor audit</p>
+          <h3>Multi-day solutions existed — poorly</h3>
+          <ul>
+            <li>Conflict detection only surfaced at checkout</li>
+            <li>No persistent itinerary summary while browsing</li>
+            <li>Weak mobile experiences across all competitors</li>
+          </ul>
+        </div>
+      </div>
+
+      <p>Three findings shaped every design decision that followed: guests couldn't track what they'd booked, every competitor detected conflicts too late, and staff were resolving manually what the product should catch automatically. The design problem was structural — and the solution had to be, too.</p>
+    </div>
+
+    <!-- A/B TESTING -->
+    <div class="cs-section">
+      <p class="cs-section-label">04 — Key decision</p>
+      <h2>The date-selector decision that cut conflicts by 27%</h2>
+      <p>Date selection was the highest-stakes design decision — getting it wrong would cascade errors through the entire booking flow. I tested two fundamentally different models.</p>
+
+      <div class="ab-grid">
+        <div class="ab-card">
+          <p class="ab-label">Version A</p>
+          <h3>5-Day Quick Selector</h3>
+          <ul>
+            <li>Faster for short stays</li>
+            <li>Created friction for longer retreats</li>
+            <li>Users felt constrained beyond 5 days</li>
+            <li>Higher conflict rate during testing</li>
+          </ul>
+        </div>
+        <div class="ab-card winner">
+          <p class="ab-label">Version B <span class="ab-winner-badge">Selected</span></p>
+          <h3>Calendar Selector</h3>
+          <ul>
+            <li>Only valid dates within check-in/out range selectable</li>
+            <li>Users reported feeling more in control</li>
+            <li>27% fewer conflicts recorded during testing</li>
+            <li>"I know exactly where everything is in my week."</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0;">
+        <div class="cs-figure" style="margin:0;">
+          <div class="cs-figure-visual" style="padding:0;min-height:auto;">
+            <img src="assets/book4time/5-day-selector.png" style="width:100%;display:block;" alt="Version A – 5-Day Quick Selector" />
+          </div>
+          <div class="cs-figure-caption">Version A — 5-Day Quick Selector</div>
+        </div>
+        <div class="cs-figure" style="margin:0;">
+          <div class="cs-figure-visual" style="padding:0;min-height:auto;">
+            <img src="assets/book4time/calendar-selector.png" style="width:100%;display:block;" alt="Version B – Calendar Selector" />
+          </div>
+          <div class="cs-figure-caption">Version B — Calendar Selector (selected)</div>
+        </div>
+      </div>
+
+      <p>Version B aligned with how guests actually plan a retreat: anchored to their arrival and departure. The constraint — only allowing selections within the confirmed check-in/check-out window — turned out to be the feature. Guests didn't want infinite flexibility; they wanted a bounded space to work within. Version A gave them more choices and more errors. Version B gave them fewer choices and 27% fewer conflicts.</p>
+    </div>
+
+    <!-- SOLUTIONS -->
+    <div class="cs-section">
+      <p class="cs-section-label">05 — Solutions</p>
+      <h2>Four design decisions that changed the flow</h2>
+
+      <p class="nda-note">Final designs adjusted per NDA. Contact <a href="mailto:fionaqylai@gmail.com" style="color:var(--fg);">fionaqylai@gmail.com</a> for the full case study.</p>
+
+      <h3 style="font-size:1.0625rem;font-weight:500;margin-bottom:0.75rem;margin-top:2rem;">1. Persistent itinerary summary</h3>
+      <p>The single biggest insight from session replays: "I can't remember what I booked already." The solution was a sticky right-hand panel on desktop that updated in real time throughout the entire booking session — no extra navigation required. On mobile, where sticky panels collapse screen space, a bottom sheet component expanded on demand, maintaining itinerary access without cluttering limited real estate.</p>
+
+      <!-- Itinerary visual -->
+      <div class="cs-figure">
+        <div class="cs-figure-visual" style="padding:0;min-height:auto;">
+          <img src="assets/book4time/summary cart scroll.png" style="width:100%;display:block;" alt="Summary panel stays in view as the left content scrolls through service listings" />
+        </div>
+        <div class="cs-figure-caption">Fig 01 — Persistent summary panel: stays fixed at right while guests scroll through services and activities across multiple days</div>
+      </div>
+
+      <h3 style="font-size:1.0625rem;font-weight:500;margin-bottom:0.75rem;margin-top:2rem;">2. Real-time conflict detection</h3>
+      <p>Rather than surfacing scheduling conflicts at checkout (a common failure in competitor audits), the system flagged conflicts inline as guests made selections. This moved error prevention upstream — catching problems at the moment of selection rather than after the guest had committed to a full itinerary.</p>
+      <div class="cs-figure">
+        <div class="cs-figure-visual" style="padding:0;min-height:auto;">
+          <img src="assets/book4time/conflicts.png" style="width:100%;display:block;" alt="Inline conflict detection — scheduling conflicts flagged at the moment of selection" />
+        </div>
+        <div class="cs-figure-caption">Inline conflict detection — conflicts surface at the moment of selection, not at checkout</div>
+      </div>
+
+      <h3 style="font-size:1.0625rem;font-weight:500;margin-bottom:0.75rem;margin-top:2rem;">3. Design system contribution</h3>
+      <p>The new booking work couldn't exist in isolation — it had to integrate cleanly with the rest of the product. I audited reuse opportunities across existing flows and extended core patterns (cards, date-picker, summary modules) to support multi-day logic rather than building net-new. New components — the itinerary summary card, the conflict indicator, the edit badge — were documented with full interaction states, responsive rules, and usage guidelines, so any engineer picking up the handoff could implement correctly without a sync.</p>
+      <div class="cs-figure" style="margin:2rem 0;">
+        <div class="cs-figure-visual" style="padding:0;min-height:auto;">
+          <img src="assets/book4time/WELLNESS FLOW DS.png" style="width:100%;display:block;" alt="Wellness flow design system components" />
+        </div>
+        <div class="cs-figure-caption">Fig 03 — Wellness flow design system: components extended to support multi-day logic, documented with interaction states and responsive rules for engineering handoff</div>
+      </div>
+    </div>
+
+    <!-- PHASE 2 -->
+    <div class="cs-section">
+      <p class="cs-section-label">06 — Phase 2</p>
+      <h2>Edit functionality without new back-end scope</h2>
+
+      <p>Returning guests needed to modify existing reservations — but a fully separate back-end flow was out of scope for engineering. The solution: reuse 95% of the original booking components. Returning guests land on their existing booking summary, existing confirmed appointments display with a <strong style="color:var(--fg);font-weight:500;">Cancel</strong> option alongside each — triggering a cancellation of an already-checked-out booking. Newly browsed services not yet booked show a <strong style="color:var(--fg);font-weight:500;">Remove</strong> option instead, which simply drops them from the in-progress selection without touching any confirmed reservation. Tapping "Edit" reopens the original configuration component in context. Newly added services get a badge to show changes clearly. Same components, two distinct actions — full functionality with minimal new development.</p>
+      <div class="cs-figure">
+        <div class="cs-figure-visual" style="padding:0;min-height:auto;">
+          <img src="assets/book4time/adding-items-in-cart.png" style="width:100%;display:block;" alt="Edit flow — returning guests modify their existing booking using the same configuration components, 95% component reuse, no new back-end scope" />
+        </div>
+        <div class="cs-figure-caption">Fig 02 — Edit flow — returning guests modify their existing booking using the same configuration components, 95% component reuse, no new back-end scope</div>
+      </div>
+    </div>
+
+    <!-- OUTCOMES -->
+    <div class="cs-section">
+      <p class="cs-section-label">07 — Outcomes</p>
+      <h2>Results that moved the business</h2>
+
+      <ul class="outcome-list">
+        <li>40–53% reduction in booking errors</li>
+        <li>57% fewer support tickets from guests mid-flow</li>
+        <li>Secured first major resort group — establishing multi-day booking as a sales differentiator for future enterprise deals</li>
+        <li>Enabled fully self-service multi-day bookings for the first time on the platform</li>
+        <li>Edit functionality delivered without additional back-end scope, saving weeks of development</li>
+      </ul>
+
+    </div>
+
+    <!-- REFLECTION -->
+    <div class="cs-section">
+      <p class="cs-section-label">08 — Reflection</p>
+      <h2>Structural decisions outweigh visual ones every time</h2>
+      <p>The most impactful decisions weren't the visual ones — they were structural. Choosing to surface conflict detection inline rather than at checkout. Designing the edit flow to reuse existing components rather than build new ones. These choices required close collaboration with engineering from the start, not as a handoff.</p>
+      <p>The competitor audit was also more useful than expected — not for inspiration, but for confirming what not to do. Every competitor had the same weakness: utility collapsed under marketing pressure at exactly the moments users needed clarity most.</p>
+      <p>This wasn't just a UX problem — it was costing real revenue and real client relationships. Grounding every decision in research, and working closely within engineering constraints, turned a fragmented flow into a product Agilysys could bring to enterprise clients and win.</p>
+    </div>
+
+  </div>
+
+  <div class="cs-next">
+    <div>
+      <p class="cs-next-label">Next case study</p>
+      <h3>Multi-line purchase flow at Rogers Communications</h3>
+    </div>
+    <a href="case-study-rogers.html">
+      View project
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+
+  <footer>
+    <span class="footer-left">© 2026 Fiona Lai</span>
+    <ul class="footer-links">
+      <li><a href="mailto:fionaqylai@gmail.com">Email</a></li>
+      <li><a href="https://www.linkedin.com/in/fionaaalai/" target="_blank">LinkedIn</a></li>
+      <li><a href="about.html#resume">Resume</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    (function() {
+      var nav = document.querySelector('.nav-links');
+      if (!nav) return;
+      var ind = document.createElement('span');
+      ind.className = 'nav-indicator';
+      nav.prepend(ind);
+      var links = Array.from(nav.querySelectorAll('a'));
+      var active = nav.querySelector('a.active');
+      function place(el, noAnim) {
+        if (noAnim) ind.style.transition = 'none';
+        ind.style.left   = el.offsetLeft   + 'px';
+        ind.style.top    = el.offsetTop    + 'px';
+        ind.style.width  = el.offsetWidth  + 'px';
+        ind.style.height = el.offsetHeight + 'px';
+        if (noAnim) requestAnimationFrame(function(){ ind.style.transition = ''; });
+      }
+      if (active) { place(active, true); ind.style.opacity = '1'; }
+      else ind.style.opacity = '0';
+      links.forEach(function(link) {
+        link.addEventListener('mouseenter', function() {
+          if (!active) { place(link, true); requestAnimationFrame(function(){ ind.style.opacity = '1'; }); }
+          else place(link, false);
+        });
+        link.addEventListener('mouseleave', function() {
+          if (active) place(active, false);
+          else ind.style.opacity = '0';
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

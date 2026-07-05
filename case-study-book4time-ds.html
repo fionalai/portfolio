@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book4Time Design System — Fiona Lai</title>
+  <meta name="description" content="How Fiona Lai built a 0-to-1 design system at Book4Time — token architecture, component library, and governance for a luxury spa and resort platform." />
+  <meta property="og:title" content="Book4Time Design System — Fiona Lai" />
+  <meta property="og:description" content="Building the first design system for a luxury spa and resort booking platform — from component audit to governance — as sole design systems owner." />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="icon" href="assets/global/favicon.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #FBF8F5;
+      --fg: #111111;
+      --fg-muted: #666666;
+      --border: #EADAE0;
+      --card-bg: #FFFFFF;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --serif: 'DM Serif Display', Georgia, serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: sticky;
+      top: 1rem;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: none;
+      padding: 0 1.5rem;
+      border-bottom: none;
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.375rem;
+      color: var(--fg);
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 0.125rem; list-style: none; background: rgba(0,0,0,0.06); border-radius: 100px; padding: 0.5rem; position: relative; }
+    .nav-links a { font-size: 0.875rem; color: var(--fg-muted); text-decoration: none; padding: 0.65rem 1.35rem; border-radius: 100px; transition: color 0.2s; position: relative; z-index: 1; }
+    .nav-links a:hover { color: var(--fg); background: none; }
+    .nav-indicator { position: absolute; background: var(--card-bg); border-radius: 100px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); pointer-events: none; z-index: 0; transition: left 0.22s cubic-bezier(0.4,0,0.2,1), width 0.22s cubic-bezier(0.4,0,0.2,1), opacity 0.15s; }
+
+    .cs-hero {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 5rem 3rem 3.5rem;
+    }
+
+    .cs-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-size: 0.8125rem;
+      color: var(--fg-muted);
+      text-decoration: none;
+      margin-bottom: 2.5rem;
+      transition: color 0.2s;
+    }
+    .cs-back:hover { color: var(--fg); }
+
+    .cs-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+
+    .tag {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+    }
+    .tag:nth-child(1) { border: 1px solid #F0B8D0; color: #5F1D3E; background: #FFD6EB; }
+    .tag:nth-child(2) { border: 1px solid #E8E090; color: #5A4000; background: #FFF5B4; }
+    .tag:nth-child(3) { border: 1px solid #A0C8DC; color: #0E2840; background: #CAE4EF; }
+
+    .cs-hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      max-width: 760px;
+      margin-bottom: 1.5rem;
+    }
+
+    .cs-hero-sub {
+      font-size: 1.0625rem;
+      color: var(--fg-muted);
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    .cs-overview {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 3rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cs-ov-item label {
+      display: block;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-bottom: 0.375rem;
+    }
+    .cs-ov-item span { font-size: 0.9375rem; }
+
+    .cs-body { max-width: 900px; margin: 0 auto; padding: 0 3rem; }
+
+    .cs-section {
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .cs-section:last-child { border-bottom: none; }
+
+    .cs-section-label {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .cs-section h2 {
+      font-family: var(--serif);
+      font-size: 1.75rem;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 1.25rem;
+    }
+
+    .cs-section p {
+      font-size: 1rem;
+      color: var(--fg-muted);
+      line-height: 1.75;
+      max-width: 680px;
+      margin-bottom: 1.25rem;
+    }
+    .cs-section p:last-child { margin-bottom: 0; }
+
+    .callout {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem 2rem;
+      margin: 2rem 0;
+    }
+    .callout p {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-style: italic;
+      color: var(--fg);
+      line-height: 1.5;
+      max-width: 100%;
+      margin: 0;
+    }
+
+    .cs-figure {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin: 2rem 0;
+    }
+    .cs-figure-visual {
+      padding: 3rem;
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cs-figure-caption {
+      padding: 1rem 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.8125rem;
+      color: var(--fg-muted);
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .process-step {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .step-num {
+      font-family: var(--serif);
+      font-size: 2rem;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+    .process-step h3 { font-size: 0.9375rem; font-weight: 500; margin-bottom: 0.5rem; }
+    .process-step p { font-size: 0.875rem; line-height: 1.6; max-width: 100%; }
+
+    .phase-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 2rem 0;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .phase-item {
+      display: grid;
+      grid-template-columns: 2.5rem 1fr;
+      gap: 1.25rem;
+      padding: 1.5rem;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+    .phase-item:last-child { border-bottom: none; }
+    .phase-num {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      color: var(--border);
+      line-height: 1;
+      padding-top: 0.1rem;
+    }
+    .phase-content h3 { font-size: 0.9375rem; font-weight: 500; margin-bottom: 0.375rem; }
+    .phase-content p { font-size: 0.875rem; color: var(--fg-muted); line-height: 1.6; max-width: 100%; margin: 0; }
+
+    .outcome-list { list-style: none; margin: 1.5rem 0; }
+    .outcome-list li {
+      display: flex;
+      gap: 0.875rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9375rem;
+      color: var(--fg-muted);
+      line-height: 1.6;
+    }
+    .outcome-list li:last-child { border-bottom: none; }
+    .outcome-list li::before { content: '→'; color: var(--fg); flex-shrink: 0; margin-top: 0.1rem; }
+
+    .cs-next {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 3rem 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .cs-next-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-bottom: 0.5rem;
+    }
+    .cs-next h3 { font-family: var(--serif); font-size: 1.5rem; font-weight: 400; }
+    .cs-next a {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--fg);
+      text-decoration: none;
+      padding: 0.75rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      transition: all 0.2s;
+    }
+    .cs-next a:hover { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+
+    footer {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      height: 1px;
+      background: var(--border);
+    }
+    .footer-left { font-family: var(--serif); font-size: 0.9375rem; color: var(--fg-muted); }
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+    .footer-links a { font-size: 0.8125rem; color: var(--fg-muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--fg); }
+
+    /* Token visual */
+    .token-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      width: 100%;
+      max-width: 560px;
+    }
+    .token-cell {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .token-cell-label {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 10px;
+      font-family: var(--sans);
+    }
+
+    @media (max-width: 768px) {
+      nav { top: 0.75rem; }
+      .cs-hero { padding: 3rem 1.5rem 2.5rem; }
+      .cs-overview { grid-template-columns: repeat(2, 1fr); padding: 2rem 1.5rem; }
+      .cs-body { padding: 0 1.5rem; }
+      .process-steps { grid-template-columns: 1fr; }
+      .token-grid { grid-template-columns: repeat(2, 1fr); }
+      .cs-next { flex-direction: column; align-items: flex-start; padding: 3rem 1.5rem; }
+      footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Fiona Lai</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Work</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="about.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="cs-hero">
+    <a href="index.html" class="cs-back">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11 7H3M7 3L3 7l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      All work
+    </a>
+
+    <div class="cs-meta">
+      <span class="tag">Design Systems</span>
+      <span class="tag">0-to-1</span>
+      <span class="tag">Staff IC</span>
+    </div>
+
+    <h1>Building a design system from zero at Book4Time</h1>
+    <p class="cs-hero-sub">How I built the first design system for a luxury spa and resort booking platform — auditing and unifying two separate products that had diverged independently — as the sole design systems owner.</p>
+  </div>
+
+  <div class="cs-overview">
+    <div class="cs-ov-item">
+      <label>Company</label>
+      <span>Agilysys (Book4Time)</span>
+    </div>
+    <div class="cs-ov-item">
+      <label>Role</label>
+      <span>Lead Product Designer</span>
+    </div>
+    <div class="cs-ov-item">
+      <label>Scope</label>
+      <span>Tokens, components, governance — across 2 products</span>
+    </div>
+  </div>
+
+  <div class="cs-body">
+
+    <!-- CONTEXT -->
+    <div class="cs-section">
+      <p class="cs-section-label">01 — Context</p>
+      <h2>Two products, years of drift, no shared language</h2>
+      <p>Book4Time is an enterprise SaaS platform powering spa, wellness, and hospitality operations across 100+ luxury resort properties. By the time I joined, the product had accumulated years of inconsistency across two separate products that had grown apart independently — duplicated components, divergent color values, no shared language between design and engineering.</p>
+      <p>There was no design system. There was no single source of truth. Every sprint meant rediscovering what already existed — or building it again from scratch. And the scope wasn't one codebase of drift: it was two.</p>
+
+      <div class="callout">
+        <p>"The hardest decision wasn't which components to build first — it was what 'unification' meant across two products that had grown apart for years. I had to answer that before I designed anything."</p>
+      </div>
+    </div>
+
+    <!-- PROBLEM -->
+    <div class="cs-section">
+      <p class="cs-section-label">02 — Problem</p>
+      <h2>Inconsistency at scale creates compounding costs</h2>
+      <p>A component audit across both products revealed dozens of button variants with no documented rationale. Color values were hardcoded. Spacing was arbitrary. The same component had been rebuilt differently in each product — sometimes with different names, sometimes with different behaviour. Developers were building to inconsistent specs, and QA was catching design bugs that should never have shipped.</p>
+      <p>The hardest part of the audit wasn't finding inconsistencies — it was deciding what unification meant across two products with different histories. Full unification up front would slow adoption on both teams. But supporting parallel patterns defeated the purpose. That decision had to be made before a single component was designed.</p>
+
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-num">01</div>
+          <h3>Component fragmentation</h3>
+          <p>Dozens of button variants, inconsistent form patterns, and one-off components with no documentation or usage guidance.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">02</div>
+          <h3>No token architecture</h3>
+          <p>Color, spacing, and typography values were hardcoded — impossible to theme or update at scale without touching every component.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">03</div>
+          <h3>Design–dev disconnect</h3>
+          <p>No handoff standards, no shared component library. Every sprint meant re-translating design intent from scratch.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">04</div>
+          <h3>No governance</h3>
+          <p>No process for how components got created, reviewed, or deprecated. The system, such as it was, lived only as tribal knowledge.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- APPROACH -->
+    <div class="cs-section">
+      <p class="cs-section-label">03 — Approach</p>
+      <h2>Token-first, then components, then governance</h2>
+      <p>I structured the build in three deliberate phases. Starting with tokens was a conscious choice — without a shared semantic layer, any component library becomes a maintenance burden almost immediately.</p>
+
+      <div class="phase-list">
+        <div class="phase-item">
+          <div class="phase-num">1</div>
+          <div class="phase-content">
+            <h3>Design tokens</h3>
+            <p>Established a three-tier architecture: primitive values (raw colors, sizes) → semantic aliases (color.action, color.surface) → component-level tokens. This gave every value a traceable source and made theming possible without touching component code.</p>
+          </div>
+        </div>
+        <div class="phase-item">
+          <div class="phase-num">2</div>
+          <div class="phase-content">
+            <h3>Component library</h3>
+            <p>Built on the token layer, prioritising highest-reuse components first: buttons, forms, cards, modals, navigation. Each component shipped with usage guidelines, anatomy breakdowns, do/don't patterns, and accessibility annotations.</p>
+          </div>
+        </div>
+        <div class="phase-item">
+          <div class="phase-num">3</div>
+          <div class="phase-content">
+            <h3>Governance model</h3>
+            <p>A contribution process, review workflow with engineering, deprecation checklist, and monthly design system office hours. The goal was making the system maintainable by the team — not just by me.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Component library — real screenshots -->
+      <div class="cs-figure">
+        <div class="cs-figure-visual" style="background:#F3F4F6; padding: 2rem; gap: 1.5rem; flex-direction: column;">
+          <div style="display:flex;gap:1.5rem;align-items:flex-start;flex-wrap:wrap;">
+            <div style="flex:1.6;min-width:280px;">
+              <img src="assets/book4time/top-nav.png" alt="Navigation bar component variants across desktop, tablet, and mobile breakpoints" style="width:100%;display:block;border-radius:6px;border:1px solid #E5E7EB;" />
+            </div>
+            <div style="flex:1;min-width:200px;">
+              <img src="assets/book4time/calendar.png" alt="Calendar date picker component in collapsed and expanded states" style="width:100%;display:block;border-radius:6px;border:1px solid #E5E7EB;" />
+            </div>
+          </div>
+        </div>
+        <div class="cs-figure-caption">Fig 01 — Two foundational components from the design system: the navigation bar across three breakpoints (desktop / tablet / mobile, both default and modal states), and the calendar date picker in collapsed and expanded states. Every OBX page uses both.</div>
+      </div>
+    </div>
+
+    <!-- SIGNATURE COMPONENT -->
+    <div class="cs-section">
+      <p class="cs-section-label">04 — Signature component</p>
+      <h2>The service card: progressive disclosure at the core of the booking flow</h2>
+      <p>The most complex and high-impact component was the service card — the primary interface for browsing, selecting, and configuring spa treatments. It needed to handle multi-select add-ons, technician preferences, time slot selection, and multi-date cart grouping in a single, coherent component.</p>
+      <p>The design challenge was layering this complexity without overwhelming guests. The solution was progressive disclosure: a collapsed default state showing only the essential — service name, duration, price — with an expanded state unlocking the full configuration without navigation away from the browsing context.</p>
+
+      <div class="cs-figure">
+        <div class="cs-figure-visual" style="background:#F3F4F6; padding: 2rem;">
+          <img src="assets/book4time/calendar-flow-cards.png" alt="Full state map of the service and activity card component across all variants and interaction states" style="width:100%;display:block;border-radius:6px;border:1px solid #E5E7EB;" />
+        </div>
+        <div class="cs-figure-caption">Fig 02 — Full state map for the service and activity card component: default, selected, expanded (with add-ons open), disabled, and mobile variants. Every state specified before a single line of code was written.</div>
+      </div>
+
+    </div>
+
+    <!-- GOVERNANCE -->
+    <div class="cs-section">
+      <p class="cs-section-label">05 — Governance</p>
+      <h2>A system without governance is just documentation no one reads</h2>
+      <p>The hardest part of a 0-to-1 design system isn't building the components — it's keeping the system alive after launch. I designed a contribution model that made it easy for product designers to propose and contribute without fragmenting the library.</p>
+      <p>That urgency was earned the hard way. Three months into the build, I discovered that engineering had been implementing hardcoded color values in a parallel sprint — before the semantic token layer was finalised. Walking it back required more trust-building than design decisions, and it made one thing clear: governance couldn't wait for the library to ship. A contribution process needed to exist before teams started contributing without one.</p>
+      <p>The model included: a component request template with a clear acceptance criteria checklist, a joint design-engineering review process, a deprecation workflow, and monthly office hours for design system questions. Component adoption was tracked across feature teams so we could see where the system was working and where it wasn't.</p>
+
+      <div class="callout">
+        <p>"Anyone can build a component library. Making it a living system that a team can maintain without you — that's the hard work."</p>
+      </div>
+    </div>
+
+    <!-- OUTCOMES -->
+    <div class="cs-section">
+      <p class="cs-section-label">06 — Outcomes</p>
+      <h2>The first feature built on the system went through handoff without a reconciliation sync</h2>
+      <p>The system went from nothing to a production-ready library used across product squads — with zero-configuration theming ready for future white-label opportunities across the 100+ enterprise properties on the platform.</p>
+
+      <ul class="outcome-list">
+        <li>First design system shipped for the platform — tokens, components, and documentation in production</li>
+        <li>First feature built on the system went through handoff without a single reconciliation sync — the concrete signal that the shared language was working</li>
+        <li>New feature design time reduced: teams assembled screens from existing components rather than starting from scratch each sprint</li>
+        <li>Design-to-dev handoff friction eliminated — shared component specs and interaction states replaced per-sprint renegotiation</li>
+        <li>Contribution model adopted by the full design team, enabling system growth without routing every request through one designer</li>
+        <li>Token architecture ready for zero-configuration theming across future white-label enterprise properties on the platform</li>
+      </ul>
+    </div>
+
+    <!-- REFLECTION -->
+    <div class="cs-section">
+      <p class="cs-section-label">07 — Reflection</p>
+      <h2>What I'd do differently</h2>
+      <p>If I were starting this system again, I'd invest earlier in engineering partnership. Having an engineer embedded in the design system work from week one — rather than month three — would have aligned the token architecture with theming implementation from the start, saving a round of rework.</p>
+      <p>I'd also build the governance model earlier. I shipped it after the initial component library, which meant a few months of ad-hoc contributions that needed retroactive cleanup. The contribution model should launch alongside the first components, not after.</p>
+    </div>
+
+  </div>
+
+  <div class="cs-next">
+    <div>
+      <p class="cs-next-label">Next case study</p>
+      <h3>Booking flow for luxury spas and resorts</h3>
+    </div>
+    <a href="case-study-book4time.html">
+      View project
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+
+  <footer>
+    <span class="footer-left">© 2026 Fiona Lai</span>
+    <ul class="footer-links">
+      <li><a href="mailto:fionaqylai@gmail.com">Email</a></li>
+      <li><a href="https://www.linkedin.com/in/fionaaalai/" target="_blank">LinkedIn</a></li>
+      <li><a href="about.html#resume">Resume</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    (function() {
+      var nav = document.querySelector('.nav-links');
+      if (!nav) return;
+      var ind = document.createElement('span');
+      ind.className = 'nav-indicator';
+      nav.prepend(ind);
+      var links = Array.from(nav.querySelectorAll('a'));
+      var active = nav.querySelector('a.active');
+      function place(el, noAnim) {
+        if (noAnim) ind.style.transition = 'none';
+        ind.style.left   = el.offsetLeft   + 'px';
+        ind.style.top    = el.offsetTop    + 'px';
+        ind.style.width  = el.offsetWidth  + 'px';
+        ind.style.height = el.offsetHeight + 'px';
+        if (noAnim) requestAnimationFrame(function(){ ind.style.transition = ''; });
+      }
+      if (active) { place(active, true); ind.style.opacity = '1'; }
+      else ind.style.opacity = '0';
+      links.forEach(function(link) {
+        link.addEventListener('mouseenter', function() {
+          if (!active) { place(link, true); requestAnimationFrame(function(){ ind.style.opacity = '1'; }); }
+          else place(link, false);
+        });
+        link.addEventListener('mouseleave', function() {
+          if (active) place(active, false);
+          else ind.style.opacity = '0';
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
