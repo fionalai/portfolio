@@ -184,6 +184,40 @@
       margin: 0;
     }
 
+    .cs-note {
+      display: flex;
+      gap: 0.875rem;
+      align-items: flex-start;
+      background: #FFF8EC;
+      border: 1px solid #F5D78E;
+      border-left: 3px solid #E8A800;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin: 2rem 0;
+    }
+    .cs-note-icon {
+      font-size: 0.875rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: #B07800;
+    }
+    .cs-note-body { flex: 1; }
+    .cs-note-label {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #B07800;
+      margin-bottom: 0.25rem;
+    }
+    .cs-note-body p {
+      font-size: 0.875rem;
+      color: #5C4200;
+      line-height: 1.6;
+      max-width: 100%;
+      margin: 0;
+    }
+
     .cs-figure {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -351,6 +385,93 @@
       font-family: var(--sans);
     }
 
+    /* ── Hero image spread ── */
+    .cs-hero-spread {
+      width: 100%;
+      background: linear-gradient(180deg, #E8EDF5 0%, #EEF1F8 60%, #F0F2F5 100%);
+      overflow: hidden;
+      padding: 3.5rem 2rem 0;
+      margin-bottom: 0;
+    }
+
+    .cs-hero-spread-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      height: 480px;
+    }
+
+    .spread-card {
+      position: absolute;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    /* Material Design elevation — dp8 */
+    .spread-card--main {
+      /* Material dp8 shadow */
+      box-shadow:
+        0 5px 5px rgba(0,0,0,0.08),
+        0 8px 10px rgba(0,0,0,0.06),
+        0 3px 14px rgba(0,0,0,0.10);
+      width: 62%;
+      bottom: 0;
+      left: 0;
+      z-index: 2;
+      border-radius: 12px 12px 0 0;
+    }
+    .spread-card--main img {
+      width: 100%;
+      display: block;
+      border-radius: 12px 12px 0 0;
+    }
+
+    /* Material dp4 shadow */
+    .spread-card--secondary {
+      box-shadow:
+        0 2px 4px rgba(0,0,0,0.10),
+        0 4px 5px rgba(0,0,0,0.08),
+        0 1px 10px rgba(0,0,0,0.12);
+      width: 30%;
+      right: 6%;
+      top: 2rem;
+      z-index: 3;
+      border-radius: 10px;
+    }
+    .spread-card--secondary img {
+      width: 100%;
+      display: block;
+      border-radius: 10px;
+    }
+
+    /* Material dp2 shadow — sits furthest back */
+    .spread-card--tertiary {
+      box-shadow:
+        0 1px 2px rgba(0,0,0,0.10),
+        0 2px 2px rgba(0,0,0,0.08),
+        0 3px 1px rgba(0,0,0,0.12);
+      width: 44%;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
+      border-radius: 10px 10px 0 0;
+      opacity: 0.92;
+    }
+    .spread-card--tertiary img {
+      width: 100%;
+      display: block;
+      border-radius: 10px 10px 0 0;
+    }
+
+    @media (max-width: 768px) {
+      .cs-hero-spread { padding: 2rem 1rem 0; }
+      .cs-hero-spread-inner { height: 260px; }
+      .spread-card--main { width: 75%; }
+      .spread-card--secondary { width: 38%; right: 0; top: 1rem; }
+      .spread-card--tertiary { display: none; }
+    }
+
     @media (max-width: 768px) {
       nav { top: 0.75rem; }
       .cs-hero { padding: 3rem 1.5rem 2.5rem; }
@@ -369,15 +490,14 @@
     <a href="index.html" class="nav-logo">Fiona Lai</a>
     <ul class="nav-links">
       <li><a href="index.html">Work</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="about.html#contact">Contact</a></li>
+      <li><a href="about.html">About me</a></li>
     </ul>
   </nav>
 
   <div class="cs-hero">
     <a href="index.html" class="cs-back">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11 7H3M7 3L3 7l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      All work
+      All case studies
     </a>
 
     <div class="cs-meta">
@@ -413,6 +533,7 @@
       <h2>Two products, years of drift, no shared language</h2>
       <p>Book4Time is an enterprise SaaS platform powering spa, wellness, and hospitality operations across 100+ luxury resort properties. By the time I joined, the product had accumulated years of inconsistency across two separate products that had grown apart independently — duplicated components, divergent color values, no shared language between design and engineering.</p>
       <p>There was no design system. There was no single source of truth. Every sprint meant rediscovering what already existed — or building it again from scratch. And the scope wasn't one codebase of drift: it was two.</p>
+      <p>A further constraint shaped every decision: Book4Time is a white-label platform. Colors, typography, imagery, and copy are all customizable per property — a resort in the Maldives and a day spa in Toronto run the same codebase with completely different brand skins. That meant the design system couldn't lock in any opinionated visual language. The foundation had to be brand-neutral: a structural baseline where spacing relationships, interaction patterns, and component logic are defined, but every visual expression is a configurable variable. This case study focuses on that structure — the architecture of what was built, not the visual output of any one property's theme.</p>
 
       <div class="callout">
         <p>"The hardest decision wasn't which components to build first — it was what 'unification' meant across two products that had grown apart for years. I had to answer that before I designed anything."</p>
@@ -454,7 +575,7 @@
     <div class="cs-section">
       <p class="cs-section-label">03 — Approach</p>
       <h2>Token-first, then components, then governance</h2>
-      <p>I structured the build in three deliberate phases. Starting with tokens was a conscious choice — without a shared semantic layer, any component library becomes a maintenance burden almost immediately.</p>
+      <p>I structured the build in three deliberate phases. Starting with tokens wasn't just good practice — it was required by the platform's architecture. With 100+ properties each needing independent brand expression, semantic tokens (<code style="font-size:0.875em;background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;">color.action</code>, <code style="font-size:0.875em;background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;">color.surface</code>, <code style="font-size:0.875em;background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;">typography.heading</code>) had to be the interface between the system and each property's brand skin. No hardcoded values anywhere in the component library. Without that layer in place first, every component would have needed a rework the moment a client needed custom theming.</p>
 
       <div class="phase-list">
         <div class="phase-item">
@@ -480,19 +601,29 @@
         </div>
       </div>
 
-      <!-- Component library — real screenshots -->
-      <div class="cs-figure">
-        <div class="cs-figure-visual" style="background:#F3F4F6; padding: 2rem; gap: 1.5rem; flex-direction: column;">
-          <div style="display:flex;gap:1.5rem;align-items:flex-start;flex-wrap:wrap;">
-            <div style="flex:1.6;min-width:280px;">
-              <img src="assets/book4time/top-nav.png" alt="Navigation bar component variants across desktop, tablet, and mobile breakpoints" style="width:100%;display:block;border-radius:6px;border:1px solid #E5E7EB;" />
-            </div>
-            <div style="flex:1;min-width:200px;">
-              <img src="assets/book4time/calendar.png" alt="Calendar date picker component in collapsed and expanded states" style="width:100%;display:block;border-radius:6px;border:1px solid #E5E7EB;" />
-            </div>
-          </div>
+      <!-- Placeholder note -->
+      <div class="cs-note">
+        <span class="cs-note-icon">◆</span>
+        <div class="cs-note-body">
+          <div class="cs-note-label">A note on visual design</div>
+          <p>The screens and components shown throughout this case study reflect the system's structural baseline — intentional placeholder styling. Colors, typography, imagery, and copy are all configurable per client: every property (resort, spa, hotel) applies its own brand on top of the same foundation. What you're seeing is the skeleton of the system, not any one property's finished product.</p>
         </div>
-        <div class="cs-figure-caption">Fig 01 — Two foundational components from the design system: the navigation bar across three breakpoints (desktop / tablet / mobile, both default and modal states), and the calendar date picker in collapsed and expanded states. Every OBX page uses both.</div>
+      </div>
+
+      <!-- DS foundation layer — tokens, typography, core components -->
+      <div class="cs-figure">
+        <div class="cs-figure-visual" style="background:#F8F9FA; padding: 2rem;">
+          <img src="assets/book4time/ds.png" alt="Design system foundation: semantic color token palette, typography scale, input field states, button variants, and navigation components" style="width:100%;display:block;border-radius:6px;border:1px solid #E5E7EB;" />
+        </div>
+        <div class="cs-figure-caption">Fig 01 — The foundation layer: semantic color tokens across all surface roles, the typography scale from Display through Label, input field states (default, focused, error), button variants (filled, outlined, text) across all states, and navigation orientations. Everything a team needs before touching a product screen.</div>
+      </div>
+
+      <!-- Component library — complex booking components -->
+      <div class="cs-figure">
+        <div class="cs-figure-visual" style="background:#F8F9FA; padding: 2rem;">
+          <img src="assets/book4time/Assortment of components.png" alt="Assortment of Book4Time design system components: date range pickers, filter panels, cart guest sections, summary panels, promo code inputs, quantity controls" style="width:100%;display:block;border-radius:6px;border:1px solid #E5E7EB;" />
+        </div>
+        <div class="cs-figure-caption">Fig 02 — Booking-domain components built on the foundation: date pickers (range and specific-date variants), activity filter panels, multi-guest cart sections, summary panels with promo code states, and quantity controls. All values traceable back to the semantic token layer.</div>
       </div>
     </div>
 
@@ -507,7 +638,7 @@
         <div class="cs-figure-visual" style="background:#F3F4F6; padding: 2rem;">
           <img src="assets/book4time/calendar-flow-cards.png" alt="Full state map of the service and activity card component across all variants and interaction states" style="width:100%;display:block;border-radius:6px;border:1px solid #E5E7EB;" />
         </div>
-        <div class="cs-figure-caption">Fig 02 — Full state map for the service and activity card component: default, selected, expanded (with add-ons open), disabled, and mobile variants. Every state specified before a single line of code was written.</div>
+        <div class="cs-figure-caption">Fig 03 — Full state map for the service and activity card component: default, selected, expanded (with add-ons open), disabled, and mobile variants. Every state specified before a single line of code was written.</div>
       </div>
 
     </div>
@@ -529,7 +660,7 @@
     <div class="cs-section">
       <p class="cs-section-label">06 — Outcomes</p>
       <h2>The first feature built on the system went through handoff without a reconciliation sync</h2>
-      <p>The system went from nothing to a production-ready library used across product squads — with zero-configuration theming ready for future white-label opportunities across the 100+ enterprise properties on the platform.</p>
+      <p>The system went from nothing to a production-ready library used across product squads — with a semantic token layer that lets any of the 100+ properties apply their own brand (colors, typography, imagery) without touching a single component.</p>
 
       <ul class="outcome-list">
         <li>First design system shipped for the platform — tokens, components, and documentation in production</li>
@@ -541,23 +672,24 @@
       </ul>
     </div>
 
-    <!-- REFLECTION -->
+    <!-- NEXT STEPS -->
     <div class="cs-section">
-      <p class="cs-section-label">07 — Reflection</p>
-      <h2>What I'd do differently</h2>
-      <p>If I were starting this system again, I'd invest earlier in engineering partnership. Having an engineer embedded in the design system work from week one — rather than month three — would have aligned the token architecture with theming implementation from the start, saving a round of rework.</p>
-      <p>I'd also build the governance model earlier. I shipped it after the initial component library, which meant a few months of ad-hoc contributions that needed retroactive cleanup. The contribution model should launch alongside the first components, not after.</p>
+      <p class="cs-section-label">07 — Next steps</p>
+      <h2>Where the system goes from here</h2>
+      <p>The foundation is in place — tokens, components, governance. The next phase is deepening engineering integration: embedding a dedicated front-end engineer into the design system team so the token architecture and theming implementation evolve together rather than in separate sprints. The current handoff model works, but a tighter loop would let us ship breaking changes with more confidence and expand the token layer into motion and elevation.</p>
+      <p>Governance also needs to mature. The contribution model covers the most common cases, but the deprecation workflow is still largely manual. The next step is automating component adoption tracking across feature teams — surfacing which components are being used, where divergence is creeping in, and flagging stale specs before they become inconsistency debt.</p>
+      <p>The area I'm most interested in exploring is using AI tooling to accelerate the documentation layer. Component audits, usage guidelines, naming convention reviews, edge-case specs — these are slow to produce manually. AI can draft that scaffolding in a fraction of the time, freeing up design capacity for the judgment calls that actually require it. On a system serving 100+ properties, keeping documentation current is a real operational challenge. That's where I see the biggest leverage.</p>
     </div>
 
   </div>
 
   <div class="cs-next">
     <div>
-      <p class="cs-next-label">Next case study</p>
-      <h3>Booking flow for luxury spas and resorts</h3>
+      <p class="cs-next-label">Back to</p>
+      <h3>All case studies</h3>
     </div>
-    <a href="case-study-book4time.html">
-      View project
+    <a href="index.html">
+      View all case studies
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
   </div>

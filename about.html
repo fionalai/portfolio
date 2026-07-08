@@ -171,8 +171,8 @@
     /* — CLOCK card — */
     .card-clock {
       width: 250px;
-      top: 66%;
-      right: 16%;
+      top: 63%;
+      right: 18%;
       transform: rotate(1deg);
       padding: 1.1rem 1.25rem;
       background: #CAE4EF;
@@ -317,7 +317,7 @@
     .card-resume {
       width: 160px;
       top: 5%;
-      left: 20%;
+      left: 18%;
       transform: rotate(0.5deg);
       padding: 1rem 1.1rem;
       background: #FFF5B4;
@@ -353,8 +353,8 @@
     /* — LINKEDIN card — */
     .card-linkedin {
       width: 190px;
-      top: 7%;
-      left: 34%;
+      top: 5%;
+      left: 44%;
       transform: rotate(-1deg);
       padding: 1.1rem 1.25rem;
       background: #CAE4EF;
@@ -409,56 +409,11 @@
     }
 
     /* — BOOK REC card — */
-    .card-bookrec {
-      width: 220px;
-      top: 4%;
-      right: 22%;
-      transform: rotate(-0.5deg);
-      padding: 1.1rem 1.25rem;
-    }
-    .card-bookrec .bookrec-label {
-      font-size: 0.6875rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--fg-muted);
-      margin-bottom: 0.875rem;
-    }
-    .card-bookrec .bookrec-input {
-      width: 100%;
-      padding: 0.5rem 0.75rem;
-      font-size: 0.8125rem;
-      font-family: var(--sans);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--bg);
-      color: var(--fg);
-      outline: none;
-      margin-bottom: 0.5rem;
-      cursor: text !important;
-      transition: border-color 0.2s;
-    }
-    .card-bookrec .bookrec-input:focus { border-color: #5F1D3E; }
-    .card-bookrec .bookrec-input::placeholder { color: var(--fg-muted); }
-    .card-bookrec .bookrec-btn {
-      width: 100%;
-      padding: 0.5rem;
-      font-size: 0.8125rem;
-      font-family: var(--sans);
-      background: #5F1D3E;
-      color: #FFD6EB;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer !important;
-      transition: opacity 0.2s;
-    }
-    .card-bookrec .bookrec-btn:hover { opacity: 0.75; }
-
     /* — EMAIL card — */
     .card-email {
       width: 210px;
-      top: 58%;
-      left: 20%;
+      top: 63%;
+      left: 18%;
       transform: rotate(1deg);
       padding: 1rem 1.25rem;
       text-decoration: none;
@@ -480,16 +435,34 @@
       font-weight: 500;
       color: var(--fg);
     }
-    .card-email .email-cta {
-      margin-top: 0.75rem;
+    .email-copy-btn {
+      margin-top: 0.875rem;
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      font-size: 0.8125rem;
-      color: var(--fg-muted);
-      transition: color 0.2s;
+      gap: 0.375rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #5F1D3E;
+      background: rgba(95,29,62,0.1);
+      border: none;
+      border-radius: 100px;
+      padding: 0.35rem 0.75rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-family: inherit;
     }
-    .card-email:hover .email-cta { color: var(--fg); }
+    .email-copy-btn:hover { background: rgba(95,29,62,0.18); }
+    .card-email .email-handle {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: #5F1D3E;
+      margin-bottom: 0.2rem;
+    }
+    .card-email .email-sub {
+      font-size: 0.8125rem;
+      color: #5F1D3E;
+      opacity: 0.7;
+    }
 
     /* — MUSIC card — */
     .card-music {
@@ -617,8 +590,7 @@
 
       /* Span full width for certain cards */
       .card-clock,
-      .card-interests,
-      .card-bookrec { grid-column: span 2; }
+      .card-interests { grid-column: span 2; }
       .card-email { grid-column: span 2; }
 
       footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; }
@@ -635,8 +607,7 @@
     <a href="index.html" class="nav-logo">Fiona Lai</a>
     <ul class="nav-links">
       <li><a href="index.html">Work</a></li>
-      <li><a href="about.html" class="active">About</a></li>
-      <li><a href="about.html#contact">Contact</a></li>
+      <li><a href="about.html" class="active">About me</a></li>
     </ul>
   </nav>
 
@@ -751,14 +722,6 @@
     </div>
 
     <!-- Book Rec -->
-    <div class="card card-bookrec"
-         data-badge="📚 What should I read?"
-         data-badge-style="badge-purple">
-      <div class="bookrec-label">Recommend a book</div>
-      <input class="bookrec-input" id="bookrec-input" type="text" placeholder="Title or author..." />
-      <button class="bookrec-btn" onclick="sendBookRec()">Send →</button>
-    </div>
-
     <!-- LinkedIn -->
     <a href="https://www.linkedin.com/in/fionaaalai/" target="_blank" class="card card-linkedin"
        data-badge="🔗 Let's connect"
@@ -768,19 +731,24 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="#0A66C2" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
         <div class="li-handle">LinkedIn</div>
       </div>
-      <div class="li-sub">/in/fiona-lai</div>
+      <div class="li-sub">/in/fionaaalai</div>
     </a>
 
     <!-- Email -->
-    <a href="mailto:fionaqylai@gmail.com" class="card card-email" id="contact"
-       data-badge="📬 Say hi!"
-       data-badge-style="badge-dark">
+    <div class="card card-email" id="contact"
+         data-badge="📬 Say hi!"
+         data-badge-style="badge-dark">
       <div class="email-label">Get in touch</div>
-      <div class="email-cta">
-        Send a message
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.2rem;">
+        <span style="font-size:1.25rem;line-height:1;" aria-hidden="true">✉️</span>
+        <div class="email-handle">Email</div>
       </div>
-    </a>
+      <div class="email-sub">fionaqylai@gmail.com</div>
+      <button class="email-copy-btn" onclick="copyEmail(this)" type="button">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy email
+      </button>
+    </div>
 
     </div><!-- end cards-grid -->
 
@@ -795,6 +763,16 @@
   </footer>
 
   <script>
+    function copyEmail(btn) {
+      navigator.clipboard.writeText('fionaqylai@gmail.com').then(function() {
+        var icon = btn.querySelector('svg').outerHTML;
+        btn.innerHTML = icon + ' Copied!';
+        setTimeout(function() {
+          btn.innerHTML = icon + ' Copy email';
+        }, 2000);
+      });
+    }
+
     // Live clocks — Toronto, NYC, Hong Kong
     function updateClock() {
       const now = new Date();
@@ -818,15 +796,6 @@
     updateClock();
     setInterval(updateClock, 1000);
 
-    // Book recommendation mailto
-    function sendBookRec() {
-      const val = document.getElementById('bookrec-input').value.trim();
-      if (!val) return;
-      window.location.href = 'mailto:fionaqylai@gmail.com?subject=' + encodeURIComponent('Book rec: ' + val) + '&body=' + encodeURIComponent('You should read: ' + val);
-    }
-    document.getElementById('bookrec-input').addEventListener('keydown', e => {
-      if (e.key === 'Enter') sendBookRec();
-    });
 
     // Sliding nav indicator
     (function() {
