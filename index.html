@@ -118,6 +118,44 @@
       color: var(--fg-muted);
     }
 
+    .name-highlight {
+      display: inline-block;
+      vertical-align: baseline;
+      position: relative;
+      background: #FFD6EB;
+      color: var(--fg);
+      padding: 0.05em 0.3em;
+      border-radius: 0;
+    }
+
+    .name-highlight::before,
+    .name-highlight::after {
+      content: '';
+      position: absolute;
+      width: 10px;
+      pointer-events: none;
+    }
+
+    /* Left handle: dot at top, line going down */
+    .name-highlight::before {
+      left: -3px;
+      top: -9px;
+      height: calc(100% + 9px);
+      background:
+        radial-gradient(circle 5px at 5px 5px, #B04878 5px, transparent 5.1px),
+        linear-gradient(#B04878, #B04878) 4px 10px / 2px calc(100% - 10px) no-repeat;
+    }
+
+    /* Right handle: line going down, dot at bottom */
+    .name-highlight::after {
+      right: -3px;
+      top: 0;
+      height: calc(100% + 9px);
+      background:
+        linear-gradient(#B04878, #B04878) 4px 0 / 2px calc(100% - 10px) no-repeat,
+        radial-gradient(circle 5px at 5px calc(100% - 5px), #B04878 5px, transparent 5.1px);
+    }
+
     .hero-sub {
       font-size: 1.0625rem;
       color: var(--fg-muted);
@@ -471,7 +509,7 @@
 
   <section class="hero">
     <span class="hero-tag">Staff Product Designer · 7+ years</span>
-    <h1>Hi, I'm <em>Fiona Lai.</em></h1>
+    <h1>Hi, I'm <em><span class="name-highlight">Fiona Lai</span></em></h1>
     <p class="hero-sub">I build design infrastructure for complex products — from 0-to-1 systems to enterprise platforms serving millions of users across North America.</p>
     <div class="hero-actions">
       <a href="#work" class="btn btn-primary">
