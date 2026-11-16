@@ -7,7 +7,7 @@
   <title>Multi-Line Purchase Flow — Rogers Communications — Fiona Lai</title>
   <meta name="description" content="How Fiona Lai redesigned the Rogers wireless purchase flow so customers could buy multiple lines in one session, with transparent pricing and a redesigned cart." />
   <meta property="og:title" content="Multi-Line Purchase Flow — Rogers Communications — Fiona Lai" />
-  <meta property="og:description" content="Redesigning a shared purchase flow so customers could buy multiple wireless lines in a single session — removing the biggest friction point at one of Canada's largest telcos." />
+  <meta property="og:description" content="Redesigning a shared purchase flow so customers could buy multiple wireless lines in a single session, removing the biggest friction point at one of Canada's largest telcos." />
   <meta property="og:type" content="article" />
   <meta name="twitter:card" content="summary" />
   <link rel="icon" href="assets/global/favicon.png" type="image/png" />
@@ -438,8 +438,47 @@
     .footer-links a { font-size: 0.8125rem; color: var(--fg-muted); text-decoration: none; transition: color 0.2s; }
     .footer-links a:hover { color: var(--fg); }
 
+    .cs-glance {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 3rem 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .glance-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+    }
+    .glance-card label {
+      display: block;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-bottom: 0.5rem;
+    }
+    .glance-card p { font-size: 0.9375rem; line-height: 1.55; color: var(--fg); }
+
+    .addresses {
+      display: inline-block;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.25rem 0.75rem;
+      margin-bottom: 0.875rem;
+    }
+
     @media (max-width: 768px) {
       nav { top: 0.75rem; }
+      .cs-glance { grid-template-columns: 1fr; padding: 2rem 1.5rem 0; }
       .cs-hero { padding: 3rem 1.5rem 2.5rem; }
       .cs-overview { grid-template-columns: repeat(2, 1fr); padding: 2rem 1.5rem; }
       .cs-body { padding: 0 1.5rem; }
@@ -447,6 +486,44 @@
       .competitor-grid { grid-template-columns: 1fr; }
       .cs-next { flex-direction: column; align-items: flex-start; padding: 3rem 1.5rem; }
       footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; }
+    }
+
+    /* Keep the floating nav readable when content scrolls underneath it */
+    .nav-logo {
+      background: rgba(251,248,245,0.84);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      padding: 0.3rem 0.8rem;
+      margin-left: -0.8rem;
+      border-radius: 100px;
+    }
+    .nav-links {
+      background: rgba(236,233,230,0.86);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+    }
+
+    /* Mobile spacing */
+    @media (max-width: 768px) {
+      .cs-section { padding: 3rem 0; }
+      .cs-figure { margin: 1.5rem 0; }
+      .cs-figure-visual[style*="2rem"] { padding: 0.75rem !important; }
+      .cs-figure-caption { padding: 0.875rem 1rem; }
+      .callout { padding: 1.25rem; margin: 1.5rem 0; }
+      .callout p { font-size: 1.125rem; }
+      .fig-pair, div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+      .fig-pair .cs-figure, div[style*="grid-template-columns:1fr 1fr"] .cs-figure { margin: 0; }
+      .process-steps, .competitor-grid, .research-grid, .ab-grid { margin: 1.5rem 0; }
+      .cs-next { gap: 1.25rem; }
+    }
+    @media (max-width: 560px) {
+      .cs-overview { grid-template-columns: 1fr; gap: 0.875rem; padding: 1.5rem; }
+      .cs-ov-item { display: grid; grid-template-columns: 5.5rem 1fr; gap: 1rem; align-items: baseline; }
+      .cs-ov-item label { margin-bottom: 0; }
+      .cs-glance { padding-top: 1.5rem; gap: 0.75rem; }
+    }
+    @media (max-width: 360px) {
+      .nav-links a, .nav-links a.active { padding: 0.5rem 0.75rem; }
     }
   </style>
 </head>
@@ -472,8 +549,8 @@
       <span class="tag">Purchase Flow</span>
     </div>
 
-    <h1>Multi-line purchase flow at Rogers Communications</h1>
-    <p class="cs-hero-sub">Redesigning a shared purchase flow so customers could buy multiple wireless lines in a single session — eliminating the biggest friction point for new customers at one of Canada's largest telcos.</p>
+    <h1>One checkout for every line: rebuilding the multi-line purchase flow at Rogers</h1>
+    <p class="cs-hero-sub">Redesigning a shared purchase flow so customers could buy multiple wireless lines in a single session, removing the biggest friction point for new customers at one of Canada's largest telcos.</p>
   </div>
 
   <div class="cs-overview">
@@ -491,13 +568,28 @@
     </div>
   </div>
 
+  <div class="cs-glance">
+    <div class="glance-card">
+      <label>The problem</label>
+      <p>Buying more than one wireless line meant repeating the entire checkout for each one, with pricing that stayed unclear until late in the flow.</p>
+    </div>
+    <div class="glance-card">
+      <label>What I did</label>
+      <p>Mapped the dependencies of a purchase flow shared across teams, then redesigned the cart and pricing around multi-line orders, within back-end limits.</p>
+    </div>
+    <div class="glance-card">
+      <label>The result</label>
+      <p>For the first time, customers could complete a full multi-line order in one session, with trade-in and eSIM flows left undisrupted.</p>
+    </div>
+  </div>
+
   <div class="cs-body">
 
     <!-- CONTEXT -->
     <div class="cs-section">
       <p class="cs-section-label">01 — Context</p>
       <h2>One of Canada's largest telcos, with a checkout problem</h2>
-      <p>Rogers Wireless is the entry point for millions of new customers — referred to internally as New Activation Customers (NACs) — purchasing phone plans and lines. But the purchase flow had a structural gap: there was no way to buy more than one line in a single session. Each line required a full, separate checkout journey — start to finish, every time.</p>
+      <p>Rogers Wireless is the entry point for millions of new customers, known internally as New Activation Customers (NACs), who are buying phone plans and lines. But the purchase flow had a structural gap: there was no way to buy more than one line in a single session. Each line needed its own full checkout, start to finish.</p>
       <p>For families, small businesses, and any customer adding multiple lines, this meant completing the same multi-step flow repeatedly. The drop-off rate was significant, and pricing confusion throughout the flow was making it worse.</p>
 
     </div>
@@ -505,29 +597,29 @@
     <!-- PROBLEM -->
     <div class="cs-section">
       <p class="cs-section-label">02 — Problem</p>
-      <h2>Two friction points compounding each other</h2>
-      <p>The absence of multi-line support wasn't just an inconvenience — it was eroding trust at the most sensitive moment in the purchase journey. And unclear pricing was making it worse.</p>
+      <h2>Two friction points, two hard constraints</h2>
+      <p>The lack of multi-line support was eroding trust at the most sensitive moment in the purchase journey, and unclear pricing was making it worse. Two constraints shaped what a fix could look like.</p>
 
       <div class="process-steps">
         <div class="process-step">
-          <div class="step-num">01</div>
+          <div class="step-num">Problem</div>
           <h3>Repetitive checkout</h3>
-          <p>Customers buying plans for a family or team had to complete the full purchase journey separately for every line — each repetition adding friction and increasing the likelihood of abandonment before they finished.</p>
+          <p>Customers buying plans for a family or team had to complete the full purchase journey separately for every line. Each repetition added friction and made it more likely they'd give up before finishing.</p>
         </div>
         <div class="process-step">
-          <div class="step-num">02</div>
+          <div class="step-num">Problem</div>
           <h3>Pricing confusion</h3>
-          <p>Pricing on the site was frequently misinterpreted. Users couldn't tell what they'd actually be charged until late in the flow — eroding trust at exactly the moment it mattered most.</p>
+          <p>Pricing on the site was frequently misinterpreted. Users couldn't tell what they'd actually be charged until late in the flow, which eroded trust right when it mattered most.</p>
         </div>
         <div class="process-step">
-          <div class="step-num">03</div>
+          <div class="step-num">Constraint</div>
           <h3>Shared infrastructure</h3>
-          <p>The purchase flow was shared infrastructure — any change affected multiple teams and ongoing projects simultaneously. Designing in isolation wasn't an option.</p>
+          <p>The purchase flow was shared infrastructure, so any change affected multiple teams and ongoing projects at once. Designing in isolation wasn't an option.</p>
         </div>
         <div class="process-step">
-          <div class="step-num">04</div>
-          <h3>Back-end constraints</h3>
-          <p>There was no existing multi-line functionality in the back-end architecture. The solution had to be grounded in what was actually buildable — not just what was desirable.</p>
+          <div class="step-num">Constraint</div>
+          <h3>Back-end limits</h3>
+          <p>There was no existing multi-line functionality in the back-end architecture. The solution had to be grounded in what was actually buildable.</p>
         </div>
       </div>
     </div>
@@ -536,53 +628,51 @@
     <div class="cs-section">
       <p class="cs-section-label">03 — Research & discovery</p>
       <h2>Mapping constraints before touching a wireframe</h2>
-      <p>Because the purchase flow touched so many teams, I started by mapping stakeholder KPIs — understanding the constraints imposed by the existing flow structure before proposing anything. This kept us away from unnecessary design effort and toward practical, approvable solutions.</p>
+      <p>Because the purchase flow touched so many teams, I started by mapping stakeholder KPIs and the constraints of the existing flow structure before proposing anything. This kept us away from unnecessary design effort and toward practical, approvable solutions.</p>
       <p>I also audited the purchase flows of Telus, Bell, Verizon, and AT&T. The finding was consistent: these platforms were bloated with marketing content at the exact moments users needed utility. Dynamic pricing was hidden until the cart stage, and cart summaries were minimal.</p>
 
       <div class="competitor-grid">
         <div class="competitor-card">
           <p class="competitor-card-label">Shared weakness across all competitors</p>
           <h3>Marketing over utility</h3>
-          <p>Every competitor prioritised promotional content at the moments users needed clarity — obscuring pricing and burying the cart under upsells.</p>
+          <p>Every competitor prioritised promotional content at the moments users needed clarity, obscuring pricing and burying the cart under upsells.</p>
         </div>
         <div class="competitor-card">
           <p class="competitor-card-label">The opportunity</p>
           <h3>Transparency as differentiator</h3>
-          <p>Not more features — but surface the right information at the right moment. Pricing upfront. Cart summary that updates in real time. A flow that respects users' time.</p>
+          <p>Show the right information at the right moment: pricing upfront, and a cart summary that updates in real time.</p>
         </div>
       </div>
 
 
       <div class="cs-figure">
         <div class="cs-figure-visual" style="padding:0;min-height:auto;">
-          <img src="assets/book4time/competitor-analysis.png" style="width:100%;display:block;" alt="Competitor audit — Telus, Bell, Verizon, AT&T: marketing over utility at every critical decision moment" />
+          <img src="assets/book4time/competitor-analysis.png" style="width:100%;display:block;" alt="Competitor audit of Telus, Bell, Verizon, and AT&T: marketing over utility at every critical decision moment" />
         </div>
-        <div class="cs-figure-caption">Competitor audit — Telus, Bell, Verizon, AT&T: marketing over utility at every critical decision moment</div>
+        <div class="cs-figure-caption">Competitor audit of Telus, Bell, Verizon, and AT&T: marketing over utility at every critical decision moment</div>
       </div>
-      <p>Adjacent features — device trade-ins and eSIM activation — intersected with the purchase flow and had to remain undisrupted. Making the research comprehensive enough to cover these dependencies was essential before any design decisions were made.</p>
-
-      <p>After research, three areas rose above the others as the highest-impact changes given the constraints: multi-line entry points in the cart, a restructured cart with real-time pricing, and transparent pricing surfaced earlier in the flow — in that priority order. Several secondary adjustments were flagged within the checkout and configuration steps, but these three were the structural fixes the experience needed most.</p>
+      <p>After research, four changes rose above the others as the highest-impact given the constraints: multi-line entry points in the cart, a cart rebuilt to manage multiple lines, a real-time pricing summary, and transparent pricing surfaced earlier in the flow, in that priority order. Several secondary adjustments were flagged within the checkout and configuration steps, but these four were the structural fixes the experience needed most.</p>
     </div>
 
     <!-- SYSTEMS -->
     <div class="cs-section">
       <p class="cs-section-label">04 — Systemic work</p>
       <h2>Building for scale, not just this flow</h2>
-      <p>Beyond individual screens, the single and multi-line flows were shared infrastructure — a change to one had direct ripple effects on the other. I mapped these inter-system dependencies explicitly before any design decisions were locked: ensuring new components could handle asynchronous API failures gracefully, that existing single-line flows remained intact, and that adjacent features (device trade-ins, eSIM activation) were fully undisrupted throughout the redesign.</p>
+      <p>Beyond individual screens, the single and multi-line flows were shared infrastructure, so a change to one had direct ripple effects on the other. I mapped these dependencies before any design decisions were locked. That meant making sure new components could handle asynchronous API failures, that existing single-line flows stayed intact, and that adjacent features (device trade-ins, eSIM activation) weren't disrupted.</p>
       <div class="cs-figure">
         <div class="cs-figure-visual" style="padding:0;min-height:auto;">
-          <img src="assets/rogers/rogers-flow-diagram.png" style="width:100%;display:block;" alt="Single vs multi-line flow diagram — shared components create bidirectional dependencies; a change to any shared component affects both flows simultaneously" />
+          <img src="assets/rogers/rogers-flow-diagram.png" style="width:100%;display:block;" alt="Single vs multi-line flow diagram: shared components create bidirectional dependencies; a change to any shared component affects both flows simultaneously" />
         </div>
-        <div class="cs-figure-caption">Single vs multi-line flow — shared components create bidirectional dependencies, meaning any change to the cart, checkout, or pricing logic affects both flows at once</div>
+        <div class="cs-figure-caption">Single vs multi-line flow: shared components create bidirectional dependencies, so any change to the cart, checkout, or pricing logic affects both flows at once</div>
       </div>
 
       <div class="cs-figure">
         <div class="cs-figure-visual" style="padding:0;min-height:auto;">
-          <img src="assets/rogers/rogers-workshop.png" style="width:100%;display:block;" alt="Full purchase flow dependency map — Plan page through Order Summary, with team annotations on design changes, constraints, and multi-line considerations at each step" />
+          <img src="assets/rogers/rogers-workshop.png" style="width:100%;display:block;" alt="Full purchase flow dependency map, from Plan page through Order Summary, with team annotations on design changes, constraints, and multi-line considerations at each step" />
         </div>
-        <div class="cs-figure-caption">Purchase flow dependency map — charted before any design decisions were locked, with constraints and multi-line considerations annotated at each step</div>
+        <div class="cs-figure-caption">Purchase flow dependency map, charted before any design decisions were locked, with constraints and multi-line considerations annotated at each step</div>
       </div>
-      <p>I also authored documentation, usage guidelines, and contribution models so teams could autonomously adopt and build upon the system. Delivering a UI kit alone isn't sufficient — teams need the context to use it correctly without bottlenecking on the original designer.</p>
+      <p>I also authored documentation, usage guidelines, and contribution models so teams could autonomously adopt and build upon the system. A UI kit alone isn't enough. Teams need the context to use it correctly without depending on the original designer.</p>
     </div>
 
     <!-- SOLUTIONS -->
@@ -601,28 +691,32 @@
       </div>
 
       <div class="solution-block">
+        <span class="addresses">Answers: Repetitive checkout</span>
         <h3>1. Multi-line entry points in the cart</h3>
         <p>The most direct fix to the repetitive checkout problem: entry points within the shopping cart letting users add additional lines without leaving the purchase flow. Customers could now build their full order in one continuous session. This single structural change eliminated the core source of friction.</p>
       </div>
 
       <div class="solution-block">
+        <span class="addresses">Answers: Repetitive checkout</span>
         <h3>2. Cart redesigned for multi-line management</h3>
-        <p>The cart was rebuilt from scratch to support multiple lines effectively. User-friendly shortcuts — duplicate, delete, edit — let customers manage a multi-line order without unnecessary friction. A clear entry point to add another line was embedded directly in the cart, keeping purchase momentum alive.</p>
+        <p>The cart was rebuilt from scratch to support multiple lines. Shortcuts to duplicate, delete, and edit let customers manage a multi-line order easily. A clear entry point to add another line sits directly in the cart, so customers can keep going without leaving it.</p>
       </div>
 
       <div class="solution-block">
+        <span class="addresses">Answers: Pricing confusion</span>
         <h3>3. Dynamic cart summary</h3>
-        <p>A real-time pricing panel updating as users made selections. Users had a clear, running view of total cost at all times — significantly reducing mid-session abandonment due to pricing uncertainty. Seeing an accurate total in real time addressed the trust erosion that unclear pricing had been causing.</p>
+        <p>A real-time pricing panel updating as users made selections. Users had a clear, running view of total cost at all times, removing pricing uncertainty as a reason to abandon mid-session. Seeing an accurate total in real time addressed the trust erosion that unclear pricing had been causing.</p>
       </div>
 
       <div class="solution-block">
+        <span class="addresses">Answers: Pricing confusion</span>
         <h3>4. Transparent pricing at the merchandising page</h3>
-        <p>Moving pricing upstream — surfacing it directly on the merchandising page rather than hiding it until cart stage. Users could see what each plan cost, and what they'd save by adding multiple lines, before committing to any selection. This reduced misinterpretation and created a positive incentive for multi-line purchasing.</p>
+        <p>I moved pricing upstream, showing it directly on the merchandising page instead of hiding it until the cart. Users could see what each plan cost, and what they'd save by adding multiple lines, before committing to any selection. This reduced misinterpretation and gave customers a reason to add more lines.</p>
         <div class="cs-figure">
           <div class="cs-figure-visual" style="padding:0;min-height:auto;">
-            <img src="https://fionaportfolio.figma.site/_assets/v11/bf7b466215ea99763a8a19716bbffb5a6c7b33f4.png" style="width:100%;display:block;" alt="Pricing surfaced at the merchandising page — before any selection commitment, reducing misinterpretation and incentivising multi-line purchasing" />
+            <img src="https://fionaportfolio.figma.site/_assets/v11/bf7b466215ea99763a8a19716bbffb5a6c7b33f4.png" style="width:100%;display:block;" alt="Pricing shown on the merchandising page, before customers commit to a selection, reducing misinterpretation and encouraging multi-line purchases" />
           </div>
-          <div class="cs-figure-caption">Fig 02 — Pricing surfaced at the merchandising page — before any selection commitment, reducing misinterpretation and incentivising multi-line purchasing</div>
+          <div class="cs-figure-caption">Fig 02 — Pricing shown on the merchandising page, before customers commit to a selection, reducing misinterpretation and encouraging multi-line purchases</div>
         </div>
       </div>
     </div>
@@ -631,17 +725,17 @@
     <div class="cs-section">
       <p class="cs-section-label">06 — Outcomes</p>
       <h2>For the first time, customers could complete a full multi-line order in one session</h2>
-      <p>The redesign removed the structural gap that had been driving high-intent drop-off — and the systemic work ensured teams could build on top of it without bottlenecking on the original designer.</p>
+      <p>The redesign removed the structural gap that had been driving high-intent drop-off, and the systemic work meant teams could build on top of it without depending on the original designer.</p>
 
       <ul class="outcome-list">
-        <li>Customers could build and complete a full multi-line order in a single session for the first time — removing the primary cause of high-intent drop-off in the purchase flow</li>
-        <li>Pricing surfaced at the merchandising stage — before any selection commitment — closing the trust gap that had been driving mid-funnel abandonment</li>
+        <li>Customers could build and complete a full multi-line order in a single session for the first time, removing the primary cause of high-intent drop-off in the purchase flow</li>
+        <li>Pricing shown at the merchandising stage, before customers commit to a selection, closing the trust gap that had been driving mid-funnel abandonment</li>
         <li>Cart redesign acknowledged in stakeholder review as the clearest UX improvement; duplicate/edit/remove shortcuts resolved a long-standing usability complaint</li>
-        <li>Adjacent features (trade-ins, eSIM activation) fully undisrupted throughout the redesign — a constraint met, not just a risk avoided</li>
+        <li>Adjacent features (trade-ins, eSIM activation) stayed undisrupted throughout the redesign</li>
       </ul>
 
       <div class="callout">
-        <p>"Adding the 'Add another line' entry point to the cart sounds simple — and it was, structurally. But getting there required mapping every stakeholder KPI and every back-end constraint first. The simplest solution took the most groundwork."</p>
+        <p>"Adding an 'Add another line' entry point to the cart sounds simple, and structurally it was. But getting there meant mapping every stakeholder KPI and every back-end constraint first. The simplest solution took the most groundwork."</p>
       </div>
     </div>
 
@@ -649,8 +743,8 @@
     <div class="cs-section">
       <p class="cs-section-label">07 — Reflection</p>
       <h2>Cross-functional alignment as a design discipline</h2>
-      <p>Working on shared infrastructure made it impossible to design in a vacuum. Every decision had ripple effects across teams and projects I had to account for before proposing anything. That constraint turned out to be sharpening — it forced clearer thinking about scope, sequencing, and what "done" actually meant for each change.</p>
-      <p>The back-end constraint was a useful forcing function too. Knowing multi-line functionality didn't exist in the back end meant we couldn't just wireframe an ideal state — we had to work directly with engineers to stress-test assumptions early and avoid late-stage blockers. That collaboration produced a better-scoped solution than purely UX-led exploration would have.</p>
+      <p>Working on shared infrastructure made it impossible to design in a vacuum. Every decision had ripple effects across teams and projects I had to account for before proposing anything. That constraint helped. It forced clearer thinking about scope, sequencing, and what "done" meant for each change.</p>
+      <p>The back-end constraint helped too. Because multi-line functionality didn't exist in the back end, we couldn't just wireframe an ideal state. We had to work directly with engineers to stress-test assumptions early and avoid late-stage blockers. That collaboration produced a better-scoped solution than UX-led exploration alone would have.</p>
     </div>
 
   </div>

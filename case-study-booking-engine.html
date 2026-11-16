@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow, noarchive, noimageindex" />
+  <title>Redesigning a Booking Engine for Hundreds of Properties — Fiona Lai</title>
+  <meta name="description" content="How Fiona Lai redesigned Agilysys's online booking engine: multi-guest booking, smart availability, and a themeable base that adapts to hundreds of properties." />
+  <meta property="og:title" content="Redesigning a Booking Engine for Hundreds of Properties — Fiona Lai" />
+  <meta property="og:description" content="Redesigning a white-label booking engine around multi-guest booking, smart availability, and a themeable base for hundreds of properties." />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="icon" href="assets/global/favicon.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #FBF8F5;
+      --fg: #111111;
+      --fg-muted: #666666;
+      --border: #EADAE0;
+      --card-bg: #FFFFFF;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --serif: 'DM Serif Display', Georgia, serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: sticky;
+      top: 1rem;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: none;
+      padding: 0 1.5rem;
+      border-bottom: none;
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.375rem;
+      color: var(--fg);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.125rem;
+      list-style: none;
+      background: rgba(0,0,0,0.06);
+      border-radius: 100px;
+      padding: 0.5rem;
+      position: relative;
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      color: var(--fg-muted);
+      text-decoration: none;
+      padding: 0.65rem 1.35rem;
+      border-radius: 100px;
+      transition: color 0.2s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav-links a:hover { color: var(--fg); background: none; }
+    .nav-indicator { position: absolute; background: var(--card-bg); border-radius: 100px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); pointer-events: none; z-index: 0; transition: left 0.22s cubic-bezier(0.4,0,0.2,1), width 0.22s cubic-bezier(0.4,0,0.2,1), opacity 0.15s; }
+
+    .cs-hero {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 5rem 3rem 3.5rem;
+    }
+
+    .cs-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-size: 0.8125rem;
+      color: var(--fg-muted);
+      text-decoration: none;
+      margin-bottom: 2.5rem;
+      transition: color 0.2s;
+    }
+
+    .cs-back:hover { color: var(--fg); }
+
+    .cs-meta {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .tag {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+    }
+    .tag:nth-child(1) { border: 1px solid #F0B8D0; color: #5F1D3E; background: #FFD6EB; }
+    .tag:nth-child(2) { border: 1px solid #E8E090; color: #5A4000; background: #FFF5B4; }
+    .tag:nth-child(3) { border: 1px solid #A0C8DC; color: #0E2840; background: #CAE4EF; }
+
+    .cs-hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      max-width: 760px;
+      margin-bottom: 1.5rem;
+    }
+
+    .cs-hero-sub {
+      font-size: 1.0625rem;
+      color: var(--fg-muted);
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    .cs-overview {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 3rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cs-ov-item label {
+      display: block;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-bottom: 0.375rem;
+    }
+
+    .cs-ov-item span {
+      font-size: 0.9375rem;
+    }
+
+    .cs-body {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 3rem;
+    }
+
+    .cs-section {
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cs-section:last-child { border-bottom: none; }
+
+    .cs-section-label {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .cs-section h2 {
+      font-family: var(--serif);
+      font-size: 1.75rem;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 1.25rem;
+    }
+
+    .cs-section p {
+      font-size: 1rem;
+      color: var(--fg-muted);
+      line-height: 1.75;
+      max-width: 680px;
+      margin-bottom: 1.25rem;
+    }
+
+    .cs-section p:last-child { margin-bottom: 0; }
+
+    .callout {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem 2rem;
+      margin: 2rem 0;
+    }
+
+    .callout p {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-style: italic;
+      color: var(--fg);
+      line-height: 1.5;
+      max-width: 100%;
+      margin: 0;
+    }
+
+    .cs-figure {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin: 2rem 0;
+    }
+
+    .cs-figure-visual {
+      padding: 3rem;
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cs-figure-caption {
+      padding: 1rem 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.8125rem;
+      color: var(--fg-muted);
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .process-step {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .step-num {
+      font-family: var(--serif);
+      font-size: 2rem;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+
+    .process-step h3 {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .process-step p {
+      font-size: 0.875rem;
+      line-height: 1.6;
+      max-width: 100%;
+    }
+
+    .solution-block {
+      margin: 2.5rem 0;
+    }
+
+    .solution-block h3 {
+      font-size: 1.0625rem;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .solution-block p {
+      font-size: 1rem;
+      color: var(--fg-muted);
+      line-height: 1.75;
+      max-width: 680px;
+      margin-bottom: 0;
+    }
+
+    .outcome-list {
+      list-style: none;
+      margin: 1.5rem 0;
+    }
+
+    .outcome-list li {
+      display: flex;
+      gap: 0.875rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9375rem;
+      color: var(--fg-muted);
+      line-height: 1.6;
+    }
+
+    .outcome-list li:last-child { border-bottom: none; }
+
+    .outcome-list li::before {
+      content: '→';
+      color: var(--fg);
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .nda-note {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.875rem 1.25rem;
+      font-size: 0.8125rem;
+      color: var(--fg-muted);
+      margin: 1.5rem 0;
+    }
+
+    .competitor-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .competitor-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .competitor-card-label {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .competitor-card h3 {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      margin-bottom: 0.625rem;
+    }
+
+    .competitor-card p {
+      font-size: 0.875rem;
+      color: var(--fg-muted);
+      line-height: 1.6;
+      max-width: 100%;
+      margin: 0;
+    }
+
+    .cs-next {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 3rem 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .cs-next-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .cs-next h3 {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+    }
+
+    .cs-next a {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--fg);
+      text-decoration: none;
+      padding: 0.75rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      transition: all 0.2s;
+    }
+
+    .cs-next a:hover { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+
+    footer {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .footer-left {
+      font-family: var(--serif);
+      font-size: 0.9375rem;
+      color: var(--fg-muted);
+    }
+
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+    .footer-links a { font-size: 0.8125rem; color: var(--fg-muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--fg); }
+
+    .fig-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .cs-glance {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 3rem 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .glance-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+    }
+    .glance-card label {
+      display: block;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-bottom: 0.5rem;
+    }
+    .glance-card p { font-size: 0.9375rem; line-height: 1.55; color: var(--fg); }
+
+    .addresses {
+      display: inline-block;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.25rem 0.75rem;
+      margin-bottom: 0.875rem;
+    }
+    .outcome-list strong { color: var(--fg); font-weight: 500; }
+
+    @media (max-width: 768px) {
+      .fig-pair { grid-template-columns: 1fr; }
+      .cs-glance { grid-template-columns: 1fr; padding: 2rem 1.5rem 0; }
+      nav { top: 0.75rem; }
+      .cs-hero { padding: 3rem 1.5rem 2.5rem; }
+      .cs-overview { grid-template-columns: repeat(2, 1fr); padding: 2rem 1.5rem; }
+      .cs-body { padding: 0 1.5rem; }
+      .process-steps { grid-template-columns: 1fr; }
+      .competitor-grid { grid-template-columns: 1fr; }
+      .cs-next { flex-direction: column; align-items: flex-start; padding: 3rem 1.5rem; }
+      footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; }
+    }
+
+    /* Keep the floating nav readable when content scrolls underneath it */
+    .nav-logo {
+      background: rgba(251,248,245,0.84);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      padding: 0.3rem 0.8rem;
+      margin-left: -0.8rem;
+      border-radius: 100px;
+    }
+    .nav-links {
+      background: rgba(236,233,230,0.86);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+    }
+
+    /* Mobile spacing */
+    @media (max-width: 768px) {
+      .cs-section { padding: 3rem 0; }
+      .cs-figure { margin: 1.5rem 0; }
+      .cs-figure-visual[style*="2rem"] { padding: 0.75rem !important; }
+      .cs-figure-caption { padding: 0.875rem 1rem; }
+      .callout { padding: 1.25rem; margin: 1.5rem 0; }
+      .callout p { font-size: 1.125rem; }
+      .fig-pair, div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+      .fig-pair .cs-figure, div[style*="grid-template-columns:1fr 1fr"] .cs-figure { margin: 0; }
+      .process-steps, .competitor-grid, .research-grid, .ab-grid { margin: 1.5rem 0; }
+      .cs-next { gap: 1.25rem; }
+    }
+    /* Phone screenshots stay side by side on mobile; full width makes them huge */
+    @media (max-width: 768px) {
+      .fig-pair.fig-pair-phones { grid-template-columns: 1fr 1fr !important; gap: 0.75rem; }
+      .fig-pair-phones .cs-figure { border-radius: 12px; }
+      .fig-pair-phones .cs-figure-caption { padding: 0.625rem 0.75rem; font-size: 0.75rem; line-height: 1.45; }
+    }
+    @media (max-width: 560px) {
+      .cs-overview { grid-template-columns: 1fr; gap: 0.875rem; padding: 1.5rem; }
+      .cs-ov-item { display: grid; grid-template-columns: 5.5rem 1fr; gap: 1rem; align-items: baseline; }
+      .cs-ov-item label { margin-bottom: 0; }
+      .cs-glance { padding-top: 1.5rem; gap: 0.75rem; }
+    }
+    @media (max-width: 360px) {
+      .nav-links a, .nav-links a.active { padding: 0.5rem 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Fiona Lai</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Work</a></li>
+      <li><a href="about.html">About me</a></li>
+    </ul>
+  </nav>
+
+  <div class="cs-hero">
+    <a href="index.html" class="cs-back">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11 7H3M7 3L3 7l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      All case studies
+    </a>
+
+    <div class="cs-meta">
+      <span class="tag">UX Design</span>
+      <span class="tag">Booking Engine</span>
+      <span class="tag">Theming</span>
+    </div>
+
+    <h1>Redesigning a booking engine that has to fit hundreds of properties</h1>
+    <p class="cs-hero-sub">Rebuilding Agilysys's online booking experience mobile-first, around multi-guest booking, smart availability, and a themeable base, so every resort, hotel, and spa can make it their own.</p>
+  </div>
+
+  <div class="cs-overview">
+    <div class="cs-ov-item">
+      <label>Company</label>
+      <span>Agilysys (Book4Time)</span>
+    </div>
+    <div class="cs-ov-item">
+      <label>Role</label>
+      <span>Lead &amp; sole designer</span>
+    </div>
+    <div class="cs-ov-item">
+      <label>Scope</label>
+      <span>Research, UX/UI, Theming</span>
+    </div>
+  </div>
+
+  <div class="cs-glance">
+    <div class="glance-card">
+      <label>The problem</label>
+      <p>A booking engine that couldn't scale across hundreds of properties, lost guests mid-flow, and was weakest on the phone, where most guests book.</p>
+    </div>
+    <div class="glance-card">
+      <label>What I did</label>
+      <p>As the only designer, I led research and redesigned the booking engine mobile-first: a themeable base, native multi-guest booking, and whole-visit availability.</p>
+    </div>
+    <div class="glance-card">
+      <label>The result</label>
+      <p>Shipped as one adaptable foundation for hundreds of properties. Post-launch metrics are still to come.</p>
+    </div>
+  </div>
+
+  <div class="cs-body">
+
+    <!-- CONTEXT -->
+    <div class="cs-section">
+      <p class="cs-section-label">01 — Context</p>
+      <h2>One booking engine, hundreds of different businesses</h2>
+      <p>Agilysys's spa and wellness platform has an online booking engine, where guests browse a property's offerings, pick a time, and book. It is embedded in the websites of hundreds of properties, from resort spas to hotel wellness centres to activity-led retreats.</p>
+      <p>No two of those properties look the same. Each has its own offerings, guest types, pricing rules, and brand. That is the real design brief: the booking engine can't be designed for one ideal property. It has to be adaptable enough to work for all of them.</p>
+      <p>It also has to work on the device guests actually use. Roughly 70% of guests book on a phone, so mobile is the primary experience.</p>
+    </div>
+
+    <!-- PROBLEM -->
+    <div class="cs-section">
+      <p class="cs-section-label">02 — Problem</p>
+      <h2>A foundation that couldn't keep up with the product</h2>
+      <p>As the platform gained functionality, the original booking engine became harder to extend, and the problems showed up for guests and for the clients who relied on it.</p>
+
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-num">01</div>
+          <h3>Hard to scale</h3>
+          <p>Every new capability (packages, add-ons, activities, member pricing) had to be squeezed into a structure that was never designed for it.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">02</div>
+          <h3>Drop-off in the flow</h3>
+          <p>Guests were abandoning bookings before completing them, and the friction in the flow was a major reason.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">03</div>
+          <h3>Dated, inconsistent UI</h3>
+          <p>Screens had accumulated one-off patterns over time, which made the experience feel dated and made every change slower and riskier.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">04</div>
+          <h3>Weakest where most guests are</h3>
+          <p>Roughly 70% of users book on mobile, yet mobile was the weakest part of the product: a desktop layout squeezed onto a small screen. Fixing it was the priority, and it called for a mobile-first approach.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESEARCH -->
+    <div class="cs-section">
+      <p class="cs-section-label">03 — Research</p>
+      <h2>Listening to the people who run the properties</h2>
+      <p>Because the booking engine has to serve so many different businesses, I started with the businesses. I spoke with a wide range of clients about what they wanted, where they struggled, and what look and feel they were aiming for. I paired that with a competitor review and prototype testing.</p>
+
+      <div class="competitor-grid">
+        <div class="competitor-card">
+          <p class="competitor-card-label">Client conversations</p>
+          <h3>Pain points, goals, and brand vibe</h3>
+          <p>What clients struggle with in the current flow, what their guests ask for, and the look and feel each property is trying to achieve.</p>
+        </div>
+        <div class="competitor-card">
+          <p class="competitor-card-label">Stakeholder interviews</p>
+          <h3>Operations and internal teams</h3>
+          <p>How offerings, pricing, and guest rules are actually configured day to day, and where the product fell short.</p>
+        </div>
+        <div class="competitor-card">
+          <p class="competitor-card-label">Competitor audit</p>
+          <h3>How other booking engines cope</h3>
+          <p>A review of how comparable booking experiences handle multiple guests, availability, and customisation.</p>
+        </div>
+        <div class="competitor-card">
+          <p class="competitor-card-label">Prototype testing</p>
+          <h3>Validating the flow early</h3>
+          <p>Testing prototypes of the redesigned flow to pressure-test the booking logic before it was locked in.</p>
+        </div>
+      </div>
+
+      <p>Four requirements came out of this work and drove every decision after: the design had to be adaptable per property, booking for more than one guest had to feel natural, availability had to account for the whole visit rather than a single service at a time, and, because most guests book on a phone, the experience had to be mobile-first.</p>
+    </div>
+
+    <!-- EXISTING EXPERIENCE -->
+    <div class="cs-section">
+      <p class="cs-section-label">04 — Starting point</p>
+      <h2>A flow built for one guest on one big screen</h2>
+      <p>Before redesigning, I walked the existing flow end to end. It had been built around a single guest on a desktop, and every extra guest, service, or smaller screen exposed that. Client branding is removed below; the screens show a generic demo property.</p>
+
+      <div class="fig-pair" style="margin:2rem 0;">
+        <div class="cs-figure" style="margin:0;">
+          <div class="cs-figure-visual" style="padding:0;min-height:auto;">
+            <img src="assets/booking-engine/existing-offering-details.png" style="width:100%;display:block;" alt="Existing offering details page" />
+          </div>
+          <div class="cs-figure-caption">Existing offering details</div>
+        </div>
+        <div class="cs-figure" style="margin:0;">
+          <div class="cs-figure-visual" style="padding:0;min-height:auto;">
+            <img src="assets/booking-engine/existing-availability.png" style="width:100%;display:block;" alt="Existing availability page" />
+          </div>
+          <div class="cs-figure-caption">Existing availability</div>
+        </div>
+      </div>
+
+      <div class="cs-figure">
+        <div class="cs-figure-visual" style="padding:0;min-height:auto;">
+          <img src="assets/booking-engine/existing-checkout.png" style="width:100%;max-width:560px;display:block;margin:0 auto;" alt="Existing checkout with a repeated guest information form for each guest" />
+        </div>
+        <div class="cs-figure-caption">Existing checkout: guest details repeat for each guest and service, producing a long form</div>
+      </div>
+    </div>
+
+    <!-- KEY DECISIONS -->
+    <div class="cs-section">
+      <p class="cs-section-label">05 — Key decisions</p>
+      <h2>Four decisions that shaped the redesign</h2>
+      <p>All four come from the same idea: keep the structure consistent and let each property change the surface. Each one is tied to the problem it answers.</p>
+
+      <p class="nda-note">Final designs adjusted per NDA. Contact <a href="mailto:fionaqylai@gmail.com" style="color:var(--fg);">fionaqylai@gmail.com</a> for the full case study.</p>
+
+      <div class="solution-block">
+        <span class="addresses">Answers: Hard to scale · Dated UI</span>
+        <h3>1. A base theme every property can make their own</h3>
+        <p>Rather than design one look, I designed a strong, neutral base theme that works out of the box, plus a system around it that lets each client choose their own typography, colours, and imagery. The hard part was deciding where to draw the line: too much freedom and every property becomes a one-off to support; too little and it stops feeling like theirs.</p>
+
+        <div class="competitor-grid" style="margin:1.5rem 0;">
+          <div class="competitor-card">
+            <p class="competitor-card-label">Fixed for every property</p>
+            <p>Structure, spacing, interaction patterns, and booking logic. This keeps the experience reliable for guests and maintainable for the team.</p>
+          </div>
+          <div class="competitor-card">
+            <p class="competitor-card-label">Chosen by each property</p>
+            <p>Typography, colours, imagery, and how guests enter the flow, from the full menu to a "Book now" entry point. This is how each property expresses its brand.</p>
+          </div>
+        </div>
+
+        <p style="margin-top:1rem;">The same thinking applied to content. Offerings come in different shapes: single services, regular packages, choice packages ("choose 3 offerings from options provided"), couples services, add-ons, and member pricing. I designed a small set of flexible offering templates that adapt to what a property sells, instead of a layout per case.</p>
+        <div class="fig-pair" style="margin:2rem 0;">
+        <div class="cs-figure" style="margin:0;">
+          <div class="cs-figure-visual" style="padding:0;min-height:auto;">
+            <img src="assets/booking-engine/redesign-offerings-list.png" style="width:100%;display:block;" alt="Offerings list with categories, services, packages, and Shop links" />
+          </div>
+          <div class="cs-figure-caption">Fig 01 — Offerings list: services, regular and choice packages, and a couples service share one card system</div>
+        </div>
+        <div class="cs-figure" style="margin:0;">
+          <div class="cs-figure-visual" style="padding:0;min-height:auto;">
+            <img src="assets/booking-engine/redesign-offerings-book-now.png" style="width:100%;display:block;" alt="Offerings list variant with a Book now entry point" />
+          </div>
+          <div class="cs-figure-caption">Fig 02 — Variant with a "Book now" entry point for properties that want a different way in</div>
+        </div>
+        </div>
+        <div class="cs-figure">
+          <div class="cs-figure-visual" style="padding:0;min-height:auto;">
+            <img src="assets/booking-engine/redesign-choice-package.png" style="width:100%;display:block;max-width:560px;margin:0 auto;" alt="Choice package offering details with per-choice selection" />
+          </div>
+          <div class="cs-figure-caption">Fig 03 — Choice package template: each choice is picked from the options the property configures, with a running price</div>
+        </div>
+      </div>
+
+      <div class="solution-block">
+        <span class="addresses">Answers: Drop-off in the flow</span>
+        <h3>2. Multi-guest booking that doesn't multiply the work</h3>
+        <p>Groups, couples, and families book together, and the old flow treated each additional guest as a separate chore. The redesign puts the guest at the centre: a "Booking for" switcher on every offering, add-ons chosen per person, and a choice between adding for the selected guest or for all guests. Member pricing is shown up front and applied at checkout.</p>
+        <div class="cs-figure">
+          <div class="cs-figure-visual" style="padding:0;min-height:auto;">
+            <img src="assets/booking-engine/redesign-service-multi-guest.png" style="width:100%;display:block;" alt="Service offering with Booking for Sarah and Jordan, per-guest add-ons, and member pricing" />
+          </div>
+          <div class="cs-figure-caption">Fig 04 — Offering details with a guest switcher, per-guest add-ons (Sarah adds Head spa, Jordan adds Facial therapy), and "Add for selected guest" / "Add for all guests"</div>
+        </div>
+        <p style="margin-top:1.5rem;">Guest information follows the same logic. Each guest gets their own tab, a "Same as reservation primary contact" shortcut, and a sign-in prompt for returning guests, so the booker only types what's new. A running "Your visit" summary keeps every guest's services and price in view.</p>
+        <div class="cs-figure">
+          <div class="cs-figure-visual" style="padding:0;min-height:auto;">
+            <img src="assets/booking-engine/redesign-guest-info.png" style="width:100%;display:block;" alt="Guest information with a tab per guest and a Your visit summary" />
+          </div>
+          <div class="cs-figure-caption">Fig 05 — Guest information: one tab per guest, shortcuts to avoid retyping, and a live visit summary</div>
+        </div>
+      </div>
+
+      <div class="solution-block">
+        <span class="addresses">Answers: Drop-off in the flow</span>
+        <h3>3. Smart availability that plans the whole visit</h3>
+        <p>Guests think about their whole visit, not one service at a time. Availability now reflects the full itinerary: one view that shows every guest's services and add-ons, technician preferences up front, and a "same room" option for couples and groups. Times are priced as a whole, so guests aren't discovering conflicts after they've chosen. The result is fewer dead ends between picking an offering and confirming a time.</p>
+        <div class="cs-figure">
+          <div class="cs-figure-visual" style="padding:0;min-height:auto;">
+            <img src="assets/booking-engine/redesign-availability.png" style="width:100%;display:block;" alt="Choose a time page showing available times for multiple guests and services" />
+          </div>
+          <div class="cs-figure-caption">Fig 06 — Availability for the whole visit: preferences on the left, times and prices for every guest and service on the right</div>
+        </div>
+      </div>
+
+      <div class="solution-block">
+        <span class="addresses">Answers: Weakest where most guests are</span>
+        <h3>4. Mobile-first, because most guests are on a phone</h3>
+        <p>With most guests booking on mobile, I stopped treating the phone as a smaller desktop and designed for it first. Every flow starts as a single column built for thumbs: sticky actions anchored to the bottom of the screen, a bottom sheet for booking options and the running summary, and a collapsed "Your preferences" panel that expands only when guests need it. The desktop layouts then add space and side-by-side panels, rather than changing the structure, so guests get the same flow on any screen, and the mobile experience is no longer the weakest link.</p>
+        <div class="fig-pair fig-pair-phones" style="margin:2rem 0;align-items:start;">
+        <div class="cs-figure" style="margin:0;">
+          <div class="cs-figure-visual" style="padding:0;min-height:auto;">
+            <img src="assets/booking-engine/redesign-availability-mobile.png" style="width:100%;display:block;" alt="Mobile availability for multiple guests" />
+          </div>
+          <div class="cs-figure-caption">Fig 07 — Mobile availability: one column, collapsible preferences, and a sticky "Confirm"</div>
+        </div>
+        <div class="cs-figure" style="margin:0;">
+          <div class="cs-figure-visual" style="padding:0;min-height:auto;">
+            <img src="assets/booking-engine/redesign-service-multi-guest-mobile.png" style="width:100%;display:block;" alt="Mobile offering details with booking summary" />
+          </div>
+          <div class="cs-figure-caption">Fig 08 — Mobile offering details with the booking summary as a bottom sheet</div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FLOW TO CONFIRMATION -->
+    <div class="cs-section">
+      <p class="cs-section-label">06 — Completing the booking</p>
+      <h2>Carrying every guest through to confirmation</h2>
+      <p>Checkout lists the guests, the time, and an itemised visit per guest, with promo codes and gift cards applied in context and edit links back to earlier steps. The confirmation page then breaks the itinerary down by guest, with a reservation number and the details they need before arriving.</p>
+      <div class="cs-figure">
+          <div class="cs-figure-visual" style="padding:0;min-height:auto;">
+            <img src="assets/booking-engine/redesign-checkout.png" style="width:100%;display:block;" alt="Checkout with guests, promo code, gift card, and itemised visit summary" />
+          </div>
+          <div class="cs-figure-caption">Fig 09 — Checkout: guests, notes, promo code, gift card, and an itemised summary per guest</div>
+        </div>
+      <div class="cs-figure">
+          <div class="cs-figure-visual" style="padding:0;min-height:auto;">
+            <img src="assets/booking-engine/redesign-confirmation.png" style="width:100%;display:block;" alt="Booking confirmation with itinerary by guest" />
+          </div>
+          <div class="cs-figure-caption">Fig 10 — Confirmation: itinerary by guest, reservation number, and pre-visit information</div>
+        </div>
+    </div>
+
+    <!-- OUTCOMES -->
+    <div class="cs-section">
+      <p class="cs-section-label">07 — Outcomes</p>
+      <h2>From a brittle flow to a foundation built to scale</h2>
+      <p>The redesign has shipped. It's too early for reliable post-launch numbers, so here is what changed against each problem I set out to solve.</p>
+
+      <ul class="outcome-list">
+        <li><span><strong>Hard to scale →</strong> one adaptable foundation serving hundreds of properties, with a consistent component base that makes new functionality faster and safer to add.</span></li>
+        <li><span><strong>Drop-off in the flow →</strong> multi-guest booking handled natively instead of as repeated single-guest flows, and availability that accounts for the whole visit, catching conflicts before guests commit.</span></li>
+        <li><span><strong>Dated, inconsistent UI →</strong> a neutral, modern base theme, with typography, colour, and imagery controlled by each client.</span></li>
+        <li><span><strong>Weakest where most guests are →</strong> a mobile-first experience for the guests who book on a phone, replacing the weakest part of the old product.</span></li>
+      </ul>
+
+      <p>I'll judge it by measures tied to those problems: booking completion through the flow, completion on mobile specifically, and how quickly a new property can be themed and launched.</p>
+    </div>
+
+    <!-- REFLECTION -->
+    <div class="cs-section">
+      <p class="cs-section-label">08 — Reflection</p>
+      <h2>Designing the rules, not just the screens</h2>
+      <p>Designing for hundreds of properties meant I couldn't pick the right answer for one business. I had to define a system of defaults, constraints, and flexible parts that gives every property a good answer. That shifted a lot of my time from pixels to decisions about what should be configurable and what should stay fixed.</p>
+      <p>Talking to clients early made the biggest difference. Hearing how differently they run their properties, and what look they wanted, is what convinced me that adaptability had to be the foundation of the design rather than an add-on at the end.</p>
+    </div>
+
+  </div>
+
+  <div class="cs-next">
+    <div>
+      <p class="cs-next-label">Back to</p>
+      <h3>All case studies</h3>
+    </div>
+    <a href="index.html">
+      View all case studies
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+
+  <footer>
+    <span class="footer-left">© 2026 Fiona Lai</span>
+    <ul class="footer-links">
+      <li><a href="mailto:fionaqylai@gmail.com">Email</a></li>
+      <li><a href="https://www.linkedin.com/in/fionaaalai/" target="_blank">LinkedIn</a></li>
+      <li><a href="assets/global/resume.pdf" target="_blank">Resume</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    (function() {
+      var nav = document.querySelector('.nav-links');
+      if (!nav) return;
+      var ind = document.createElement('span');
+      ind.className = 'nav-indicator';
+      nav.prepend(ind);
+      var links = Array.from(nav.querySelectorAll('a'));
+      var active = nav.querySelector('a.active');
+      function place(el, noAnim) {
+        if (noAnim) ind.style.transition = 'none';
+        ind.style.left   = el.offsetLeft   + 'px';
+        ind.style.top    = el.offsetTop    + 'px';
+        ind.style.width  = el.offsetWidth  + 'px';
+        ind.style.height = el.offsetHeight + 'px';
+        if (noAnim) requestAnimationFrame(function(){ ind.style.transition = ''; });
+      }
+      if (active) { place(active, true); ind.style.opacity = '1'; }
+      else ind.style.opacity = '0';
+      links.forEach(function(link) {
+        link.addEventListener('mouseenter', function() {
+          if (!active) { place(link, true); requestAnimationFrame(function(){ ind.style.opacity = '1'; }); }
+          else place(link, false);
+        });
+        link.addEventListener('mouseleave', function() {
+          if (active) place(active, false);
+          else ind.style.opacity = '0';
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

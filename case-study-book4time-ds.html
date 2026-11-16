@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow, noarchive, noimageindex" />
   <title>Book4Time Design System — Fiona Lai</title>
-  <meta name="description" content="How Fiona Lai built a 0-to-1 design system at Book4Time — token architecture, component library, and governance for a luxury spa and resort platform." />
+  <meta name="description" content="How Fiona Lai built a 0-to-1 design system at Book4Time: token architecture, component library, and governance for a luxury spa and resort platform." />
   <meta property="og:title" content="Book4Time Design System — Fiona Lai" />
-  <meta property="og:description" content="Building the first design system for a luxury spa and resort booking platform — from component audit to governance — as sole design systems owner." />
+  <meta property="og:description" content="Building the first design system for a luxury spa and resort booking platform, from component audit to governance, as sole design systems owner." />
   <meta property="og:type" content="article" />
   <meta name="twitter:card" content="summary" />
   <link rel="icon" href="assets/global/favicon.png" type="image/png" />
@@ -473,8 +473,47 @@
       .spread-card--tertiary { display: none; }
     }
 
+    .cs-glance {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 3rem 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .glance-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+    }
+    .glance-card label {
+      display: block;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      margin-bottom: 0.5rem;
+    }
+    .glance-card p { font-size: 0.9375rem; line-height: 1.55; color: var(--fg); }
+
+    .addresses {
+      display: inline-block;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.25rem 0.75rem;
+      margin-bottom: 0.875rem;
+    }
+
     @media (max-width: 768px) {
       nav { top: 0.75rem; }
+      .cs-glance { grid-template-columns: 1fr; padding: 2rem 1.5rem 0; }
       .cs-hero { padding: 3rem 1.5rem 2.5rem; }
       .cs-overview { grid-template-columns: repeat(2, 1fr); padding: 2rem 1.5rem; }
       .cs-body { padding: 0 1.5rem; }
@@ -482,6 +521,44 @@
       .token-grid { grid-template-columns: repeat(2, 1fr); }
       .cs-next { flex-direction: column; align-items: flex-start; padding: 3rem 1.5rem; }
       footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; }
+    }
+
+    /* Keep the floating nav readable when content scrolls underneath it */
+    .nav-logo {
+      background: rgba(251,248,245,0.84);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      padding: 0.3rem 0.8rem;
+      margin-left: -0.8rem;
+      border-radius: 100px;
+    }
+    .nav-links {
+      background: rgba(236,233,230,0.86);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+    }
+
+    /* Mobile spacing */
+    @media (max-width: 768px) {
+      .cs-section { padding: 3rem 0; }
+      .cs-figure { margin: 1.5rem 0; }
+      .cs-figure-visual[style*="2rem"] { padding: 0.75rem !important; }
+      .cs-figure-caption { padding: 0.875rem 1rem; }
+      .callout { padding: 1.25rem; margin: 1.5rem 0; }
+      .callout p { font-size: 1.125rem; }
+      .fig-pair, div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+      .fig-pair .cs-figure, div[style*="grid-template-columns:1fr 1fr"] .cs-figure { margin: 0; }
+      .process-steps, .competitor-grid, .research-grid, .ab-grid { margin: 1.5rem 0; }
+      .cs-next { gap: 1.25rem; }
+    }
+    @media (max-width: 560px) {
+      .cs-overview { grid-template-columns: 1fr; gap: 0.875rem; padding: 1.5rem; }
+      .cs-ov-item { display: grid; grid-template-columns: 5.5rem 1fr; gap: 1rem; align-items: baseline; }
+      .cs-ov-item label { margin-bottom: 0; }
+      .cs-glance { padding-top: 1.5rem; gap: 0.75rem; }
+    }
+    @media (max-width: 360px) {
+      .nav-links a, .nav-links a.active { padding: 0.5rem 0.75rem; }
     }
   </style>
 </head>
@@ -508,7 +585,7 @@
     </div>
 
     <h1>Building a design system from zero at Book4Time</h1>
-    <p class="cs-hero-sub">How I built the first design system for a luxury spa and resort booking platform — auditing and unifying two separate products that had diverged independently — as the sole design systems owner.</p>
+    <p class="cs-hero-sub">How I built the first design system for a luxury spa and resort booking platform as the sole design systems owner, auditing and unifying two products that had diverged independently.</p>
   </div>
 
   <div class="cs-overview">
@@ -518,11 +595,26 @@
     </div>
     <div class="cs-ov-item">
       <label>Role</label>
-      <span>Lead Product Designer</span>
+      <span>Lead Product Designer, sole design system owner</span>
     </div>
     <div class="cs-ov-item">
       <label>Scope</label>
-      <span>Tokens, components, governance — across 2 products</span>
+      <span>Tokens, components, and governance across 2 products</span>
+    </div>
+  </div>
+
+  <div class="cs-glance">
+    <div class="glance-card">
+      <label>The problem</label>
+      <p>Two products had drifted apart for years: duplicated components, hardcoded values, and no shared language between design and engineering.</p>
+    </div>
+    <div class="glance-card">
+      <label>What I did</label>
+      <p>As the sole design system owner, I built a brand-neutral, token-first system: three-tier tokens, a component library, and a governance model.</p>
+    </div>
+    <div class="glance-card">
+      <label>The result</label>
+      <p>The first feature built on the system went through handoff without a reconciliation sync, and any of 100+ properties can apply its brand without touching a component.</p>
     </div>
   </div>
 
@@ -532,12 +624,13 @@
     <div class="cs-section">
       <p class="cs-section-label">01 — Context</p>
       <h2>Two products, years of drift, no shared language</h2>
-      <p>Book4Time is an enterprise SaaS platform powering spa, wellness, and hospitality operations across 100+ luxury resort properties. By the time I joined, the product had accumulated years of inconsistency across two separate products that had grown apart independently — duplicated components, divergent color values, no shared language between design and engineering.</p>
-      <p>There was no design system. There was no single source of truth. Every sprint meant rediscovering what already existed — or building it again from scratch. And the scope wasn't one codebase of drift: it was two.</p>
-      <p>A further constraint shaped every decision: Book4Time is a white-label platform. Colors, typography, imagery, and copy are all customizable per property — a resort in the Maldives and a day spa in Toronto run the same codebase with completely different brand skins. That meant the design system couldn't lock in any opinionated visual language. The foundation had to be brand-neutral: a structural baseline where spacing relationships, interaction patterns, and component logic are defined, but every visual expression is a configurable variable. This case study focuses on that structure — the architecture of what was built, not the visual output of any one property's theme.</p>
+      <p>Book4Time is an enterprise SaaS platform powering spa, wellness, and hospitality operations across 100+ luxury resort properties. By the time I joined, the product had accumulated years of inconsistency across two separate products that had grown apart independently: duplicated components, divergent color values, no shared language between design and engineering.</p>
+      <p>There was no design system. There was no single source of truth. Every sprint meant rediscovering what already existed or building it again from scratch, and that was true across two codebases.</p>
+      <p>A further constraint shaped every decision: Book4Time is a white-label platform. Colors, typography, imagery, and copy are all customizable per property. A resort in the Maldives and a day spa in Toronto run the same codebase with completely different brand skins.</p>
+      <p>That meant the design system couldn't lock in any opinionated visual language. The foundation had to be brand-neutral: a structural baseline where spacing relationships, interaction patterns, and component logic are defined, but every visual expression is a configurable variable.</p>
 
       <div class="callout">
-        <p>"The hardest decision wasn't which components to build first — it was what 'unification' meant across two products that had grown apart for years. I had to answer that before I designed anything."</p>
+        <p>"The hardest decision was what 'unification' meant across two products that had grown apart for years. I had to answer that before I designed anything."</p>
       </div>
     </div>
 
@@ -545,8 +638,8 @@
     <div class="cs-section">
       <p class="cs-section-label">02 — Problem</p>
       <h2>Inconsistency at scale creates compounding costs</h2>
-      <p>A component audit across both products revealed dozens of button variants with no documented rationale. Color values were hardcoded. Spacing was arbitrary. The same component had been rebuilt differently in each product — sometimes with different names, sometimes with different behaviour. Developers were building to inconsistent specs, and QA was catching design bugs that should never have shipped.</p>
-      <p>The hardest part of the audit wasn't finding inconsistencies — it was deciding what unification meant across two products with different histories. Full unification up front would slow adoption on both teams. But supporting parallel patterns defeated the purpose. That decision had to be made before a single component was designed.</p>
+      <p>A component audit across both products revealed dozens of button variants with no documented rationale. Color values were hardcoded. Spacing was arbitrary. The same component had been rebuilt differently in each product, sometimes with different names and sometimes with different behaviour. Developers were building to inconsistent specs, and QA was catching design bugs that should never have shipped.</p>
+      <p>Finding the inconsistencies was the easy part of the audit. The hard part was deciding what unification meant across two products with different histories. Full unification up front would slow adoption on both teams, but supporting parallel patterns defeated the purpose. That decision had to be made before a single component was designed.</p>
 
       <div class="process-steps">
         <div class="process-step">
@@ -557,7 +650,7 @@
         <div class="process-step">
           <div class="step-num">02</div>
           <h3>No token architecture</h3>
-          <p>Color, spacing, and typography values were hardcoded — impossible to theme or update at scale without touching every component.</p>
+          <p>Color, spacing, and typography values were hardcoded, so theming or updating at scale meant touching every component.</p>
         </div>
         <div class="process-step">
           <div class="step-num">03</div>
@@ -576,7 +669,7 @@
     <div class="cs-section">
       <p class="cs-section-label">03 — Approach</p>
       <h2>Token-first, then components, then governance</h2>
-      <p>I structured the build in three deliberate phases. Starting with tokens wasn't just good practice — it was required by the platform's architecture. With 100+ properties each needing independent brand expression, semantic tokens (<code style="font-size:0.875em;background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;">color.action</code>, <code style="font-size:0.875em;background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;">color.surface</code>, <code style="font-size:0.875em;background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;">typography.heading</code>) had to be the interface between the system and each property's brand skin. No hardcoded values anywhere in the component library. Without that layer in place first, every component would have needed a rework the moment a client needed custom theming.</p>
+      <p>I structured the build in three deliberate phases. Starting with tokens was required by the platform's architecture. With 100+ properties each needing independent brand expression, semantic tokens (<code style="font-size:0.875em;background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;">color.action</code>, <code style="font-size:0.875em;background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;">color.surface</code>, <code style="font-size:0.875em;background:rgba(0,0,0,0.05);padding:1px 5px;border-radius:3px;">typography.heading</code>) had to be the interface between the system and each property's brand skin. No hardcoded values anywhere in the component library. Without that layer in place first, every component would have needed a rework the moment a client needed custom theming.</p>
 
       <div class="phase-list">
         <div class="phase-item">
@@ -597,7 +690,7 @@
           <div class="phase-num">3</div>
           <div class="phase-content">
             <h3>Governance model</h3>
-            <p>A contribution process, review workflow with engineering, deprecation checklist, and monthly design system office hours. The goal was making the system maintainable by the team — not just by me.</p>
+            <p>A contribution process, review workflow with engineering, deprecation checklist, and monthly design system office hours. The goal was a system the whole team could maintain, not just me.</p>
           </div>
         </div>
       </div>
@@ -607,7 +700,7 @@
         <span class="cs-note-icon">◆</span>
         <div class="cs-note-body">
           <div class="cs-note-label">A note on visual design</div>
-          <p>The screens and components shown throughout this case study reflect the system's structural baseline — intentional placeholder styling. Colors, typography, imagery, and copy are all configurable per client: every property (resort, spa, hotel) applies its own brand on top of the same foundation. What you're seeing is the skeleton of the system, not any one property's finished product.</p>
+          <p>The screens and components shown throughout this case study reflect the system's structural baseline, with intentionally placeholder styling. Colors, typography, imagery, and copy are all configurable per client: every property (resort, spa, hotel) applies its own brand on top of the same foundation. What you're seeing is the skeleton of the system, not any one property's finished product.</p>
         </div>
       </div>
 
@@ -632,8 +725,8 @@
     <div class="cs-section">
       <p class="cs-section-label">04 — Signature component</p>
       <h2>The service card: progressive disclosure at the core of the booking flow</h2>
-      <p>The most complex and high-impact component was the service card — the primary interface for browsing, selecting, and configuring spa treatments. It needed to handle multi-select add-ons, technician preferences, time slot selection, and multi-date cart grouping in a single, coherent component.</p>
-      <p>The design challenge was layering this complexity without overwhelming guests. The solution was progressive disclosure: a collapsed default state showing only the essential — service name, duration, price — with an expanded state unlocking the full configuration without navigation away from the browsing context.</p>
+      <p>The most complex and high-impact component was the service card, the primary interface for browsing, selecting, and configuring spa treatments. It needed to handle multi-select add-ons, technician preferences, time slot selection, and multi-date cart grouping in a single, coherent component.</p>
+      <p>The design challenge was layering this complexity without overwhelming guests. The solution was progressive disclosure: a collapsed default state showing only the essentials (service name, duration, price), and an expanded state that opens the full configuration without leaving the browsing context.</p>
 
       <div class="cs-figure">
         <div class="cs-figure-visual" style="background:#F3F4F6; padding: 2rem;">
@@ -648,12 +741,12 @@
     <div class="cs-section">
       <p class="cs-section-label">05 — Governance</p>
       <h2>A system without governance is just documentation no one reads</h2>
-      <p>The hardest part of a 0-to-1 design system isn't building the components — it's keeping the system alive after launch. I designed a contribution model that made it easy for product designers to propose and contribute without fragmenting the library.</p>
-      <p>That urgency was earned the hard way. Three months into the build, I discovered that engineering had been implementing hardcoded color values in a parallel sprint — before the semantic token layer was finalised. Walking it back required more trust-building than design decisions, and it made one thing clear: governance couldn't wait for the library to ship. A contribution process needed to exist before teams started contributing without one.</p>
+      <p>Building the components is the easier half of a 0-to-1 design system. Keeping it alive after launch is harder. I designed a contribution model that made it easy for product designers to propose and contribute without fragmenting the library.</p>
+      <p>I learned that the hard way. Three months into the build, I found that engineering had been implementing hardcoded color values in a parallel sprint, before the semantic token layer was finalised. Walking it back took more trust-building than design work, and it showed me that governance couldn't wait for the library to ship. A contribution process needed to exist before teams started contributing without one.</p>
       <p>The model included: a component request template with a clear acceptance criteria checklist, a joint design-engineering review process, a deprecation workflow, and monthly office hours for design system questions. Component adoption was tracked across feature teams so we could see where the system was working and where it wasn't.</p>
 
       <div class="callout">
-        <p>"Anyone can build a component library. Making it a living system that a team can maintain without you — that's the hard work."</p>
+        <p>"Anyone can build a component library. The hard work is making it a living system the team can maintain without you."</p>
       </div>
     </div>
 
@@ -661,13 +754,13 @@
     <div class="cs-section">
       <p class="cs-section-label">06 — Outcomes</p>
       <h2>The first feature built on the system went through handoff without a reconciliation sync</h2>
-      <p>The system went from nothing to a production-ready library used across product squads — with a semantic token layer that lets any of the 100+ properties apply their own brand (colors, typography, imagery) without touching a single component.</p>
+      <p>The system went from nothing to a production-ready library used across product squads, with a semantic token layer that lets any of the 100+ properties apply their own brand (colors, typography, imagery) without touching a single component.</p>
 
       <ul class="outcome-list">
-        <li>First design system shipped for the platform — tokens, components, and documentation in production</li>
-        <li>First feature built on the system went through handoff without a single reconciliation sync — the concrete signal that the shared language was working</li>
+        <li>First design system shipped for the platform: tokens, components, and documentation in production</li>
+        <li>First feature built on the system went through handoff without a single reconciliation sync, a concrete sign that the shared language was working</li>
         <li>New feature design time reduced: teams assembled screens from existing components rather than starting from scratch each sprint</li>
-        <li>Design-to-dev handoff friction eliminated — shared component specs and interaction states replaced per-sprint renegotiation</li>
+        <li>Design-to-dev handoff friction reduced: shared component specs and interaction states replaced per-sprint renegotiation</li>
         <li>Contribution model adopted by the full design team, enabling system growth without routing every request through one designer</li>
         <li>Token architecture ready for zero-configuration theming across future white-label enterprise properties on the platform</li>
       </ul>
@@ -677,9 +770,9 @@
     <div class="cs-section">
       <p class="cs-section-label">07 — Next steps</p>
       <h2>Where the system goes from here</h2>
-      <p>The foundation is in place — tokens, components, governance. The next phase is deepening engineering integration: embedding a dedicated front-end engineer into the design system team so the token architecture and theming implementation evolve together rather than in separate sprints. The current handoff model works, but a tighter loop would let us ship breaking changes with more confidence and expand the token layer into motion and elevation.</p>
-      <p>Governance also needs to mature. The contribution model covers the most common cases, but the deprecation workflow is still largely manual. The next step is automating component adoption tracking across feature teams — surfacing which components are being used, where divergence is creeping in, and flagging stale specs before they become inconsistency debt.</p>
-      <p>The area I'm most interested in exploring is using AI tooling to accelerate the documentation layer. Component audits, usage guidelines, naming convention reviews, edge-case specs — these are slow to produce manually. AI can draft that scaffolding in a fraction of the time, freeing up design capacity for the judgment calls that actually require it. On a system serving 100+ properties, keeping documentation current is a real operational challenge. That's where I see the biggest leverage.</p>
+      <p>The foundation is in place: tokens, components, and governance. The next phase is deepening engineering integration: embedding a dedicated front-end engineer into the design system team so the token architecture and theming implementation evolve together rather than in separate sprints. The current handoff model works, but a tighter loop would let us ship breaking changes with more confidence and expand the token layer into motion and elevation.</p>
+      <p>Governance also needs to mature. The contribution model covers the most common cases, but the deprecation workflow is still largely manual. The next step is automating component adoption tracking across feature teams, showing which components are being used, where divergence is creeping in, and which specs are going stale before they become inconsistency debt.</p>
+      <p>The area I'm most interested in exploring is using AI tooling to accelerate the documentation layer. Component audits, usage guidelines, naming convention reviews, and edge-case specs are slow to produce manually. AI can draft that scaffolding in a fraction of the time, freeing up design capacity for the judgment calls that actually require it. On a system serving 100+ properties, keeping documentation current is a real operational challenge. That's where I see the biggest leverage.</p>
     </div>
 
   </div>

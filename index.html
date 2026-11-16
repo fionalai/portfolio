@@ -252,7 +252,7 @@
     }
 
     .case-card-content {
-      padding: 3rem;
+      padding: clamp(1.75rem, 4vw, 3rem);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -300,6 +300,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 1.5rem;
     }
 
     .case-card-stat {
@@ -323,6 +324,8 @@
       font-weight: 500;
       color: var(--fg);
       text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .arrow-link svg {
@@ -336,7 +339,8 @@
     .case-card-visual {
       position: relative;
       overflow: hidden;
-      min-height: 360px;
+      min-height: 400px;
+      container-type: size;
     }
 
     .case-card-visual-inner {
@@ -347,98 +351,64 @@
       justify-content: center;
     }
 
-    /* Book4Time visual */
-    .visual-book4time {
-      background: linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%);
-    }
+    /* Screen collages */
+    .wall-pink   { background: #FBE6EF; }
+    .wall-yellow { background: #FBF3CC; }
+    .wall-blue   { background: #DCECF3; }
+    .wall-sand   { background: #EFE9E1; }
 
-    .visual-book4time-art {
+    /* The wall is sized from the preview area itself (container units), so tile
+       size, gaps and coverage stay in proportion at every card shape. */
+    .screen-wall {
+      --g: 14px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 150%;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      padding: 2rem;
-      width: 100%;
-      max-width: 320px;
+      align-items: center;
+      gap: var(--g);
+      transform: translate(-50%, -50%) rotate(-10deg);
+      transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
     }
-
-    .vis-token {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 8px;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+    @supports (width: 1cqw) {
+      .screen-wall { --g: max(2.4cqw, 3cqh); width: max(112cqw, 155cqh); }
     }
+    .case-card:hover .screen-wall { transform: translate(-50%, -52%) rotate(-10deg) scale(1.03); }
 
-    .vis-token-label {
-      font-size: 8px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
-      font-family: var(--sans);
+    .wall-col { display: flex; flex-direction: column; gap: var(--g); min-width: 0; }
+    .wall-col:nth-child(2) { transform: translateY(-4%); }
+    .wall-col:nth-child(3) { transform: translateY(4%); }
+
+    /* Every slot is the same 10:9 shape: one screen, two phones side by side, or two wide sheets stacked */
+    .wall-col > img, .wall-pair, .wall-stack { aspect-ratio: 10 / 9; width: 100%; min-height: 0; flex: none; }
+    .wall-pair  { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr); gap: var(--g); }
+    .wall-stack { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: var(--g); }
+    .wall-pair img, .wall-stack img { width: 100%; height: 100%; min-width: 0; min-height: 0; }
+
+    .screen-wall img, .screen-fan img {
+      display: block;
+      background: #fff;
+      object-fit: cover;
+      object-position: top center;
+      border-radius: calc(var(--g, 14px) * 0.55);
+      border: 1px solid rgba(17,17,17,0.08);
+      box-shadow: 0 6px 18px rgba(17,17,17,0.10);
     }
+    .wall-blue .screen-wall img, .wall-stack img { object-position: center; }
 
-    .vis-swatch {
-      height: 28px;
-      border-radius: 4px;
-    }
+    .screen-fan { position: absolute; inset: 0; }
+    .screen-fan img { position: absolute; width: 100%; border-radius: 8px; transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1); }
+    .screen-fan .fan-a { width: 74%; left: -10%; top: 14%; transform: rotate(-7deg); }
+    .screen-fan .fan-b { width: 66%; right: -12%; top: -6%; transform: rotate(5deg); }
+    .screen-fan .fan-d { width: 36%; right: 12%; top: 16%; transform: rotate(3deg); box-shadow: 0 14px 34px rgba(17,17,17,0.18); }
+    .case-card:hover .fan-a { transform: rotate(-9deg) translate(-6px, -4px); }
+    .case-card:hover .fan-b { transform: rotate(7deg) translate(6px, -4px); }
+    .case-card:hover .fan-d { transform: rotate(3deg) translateY(-8px); }
 
-    .vis-line {
-      height: 6px;
-      border-radius: 3px;
-      background: rgba(255,255,255,0.15);
-    }
-
-    .vis-line.short { width: 60%; }
-
-    /* Rogers visual */
-    .visual-rogers {
-      background: linear-gradient(135deg, #E8F4F8 0%, #D6EAF2 50%, #C4DDE8 100%);
-    }
-
-    .visual-rogers-art {
-      padding: 2rem;
-      width: 100%;
-      max-width: 340px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .vis-card-row {
-      display: flex;
-      gap: 8px;
-    }
-
-    .vis-mini-card {
-      flex: 1;
-      background: white;
-      border-radius: 10px;
-      padding: 12px;
-      box-shadow: 0 2px 8px rgba(0,50,80,0.08);
-    }
-
-    .vis-card-header {
-      width: 60%;
-      height: 8px;
-      background: #1B4F72;
-      border-radius: 4px;
-      margin-bottom: 8px;
-      opacity: 0.7;
-    }
-
-    .vis-card-body { display: flex; flex-direction: column; gap: 4px; }
-    .vis-card-line { height: 5px; border-radius: 3px; background: #BDC3C7; }
-    .vis-card-line.short { width: 70%; }
-
-    .vis-card-price {
-      margin-top: 8px;
-      height: 10px;
-      width: 45%;
-      background: #1B4F72;
-      border-radius: 4px;
-      opacity: 0.5;
+    @media (prefers-reduced-motion: reduce) {
+      .screen-wall, .screen-fan img { transition: none; }
     }
 
     /* STATS ROW */
@@ -485,16 +455,41 @@
     .footer-links a:hover { color: var(--fg); }
 
     /* RESPONSIVE */
+    /* Cards stack before the two columns get cramped */
+    @media (max-width: 960px) {
+      .case-card { grid-template-columns: 1fr; }
+      .case-card-visual { min-height: 0; aspect-ratio: 16 / 9; }
+    }
+    @media (max-width: 560px) {
+      .case-card-visual { aspect-ratio: 4 / 3; }
+      .case-card-content h2 { font-size: 1.625rem; }
+    }
     @media (max-width: 768px) {
       nav { top: 0.75rem; }
       .nav-links { gap: 0.25rem; }
       .hero { padding: 3.5rem 1.5rem 3rem; }
       .hero h1 { font-size: 2.25rem; }
       .work { padding: 3rem 1.5rem 4rem; }
-      .case-card { grid-template-columns: 1fr; }
-      .case-card-visual { min-height: 240px; }
       footer { flex-direction: column; gap: 1.5rem; padding: 2rem 1.5rem; }
       .divider { padding: 0 1.5rem; }
+    }
+
+    /* Keep the floating nav readable when content scrolls underneath it */
+    .nav-logo {
+      background: rgba(251,248,245,0.84);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      padding: 0.3rem 0.8rem;
+      margin-left: -0.8rem;
+      border-radius: 100px;
+    }
+    .nav-links {
+      background: rgba(236,233,230,0.86);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+    }
+    @media (max-width: 360px) {
+      .nav-links a, .nav-links a.active { padding: 0.5rem 0.75rem; }
     }
   </style>
 </head>
@@ -511,7 +506,7 @@
   <section class="hero">
     <span class="hero-tag">Staff Product Designer · 7+ years</span>
     <h1>Hi, I'm <em><span class="name-highlight">Fiona Lai</span></em></h1>
-    <p class="hero-sub">I build design infrastructure for complex products — from 0-to-1 systems to enterprise platforms serving millions of users across North America.</p>
+    <p class="hero-sub">I build design infrastructure for complex products, from 0-to-1 systems to enterprise platforms serving millions of users across North America.</p>
     <div class="hero-actions">
       <a href="#work" class="btn btn-primary">
         View case studies
@@ -528,32 +523,67 @@
 
     <div class="case-studies">
 
-      <!-- Book4Time Booking Flow (1st) -->
+      <!-- Booking engine redesign (1st) -->
+      <a href="case-study-booking-engine.html" class="case-card">
+        <div class="case-card-visual wall-pink" style="order: -1;">
+          <div class="screen-wall" role="img" aria-label="Screens from the redesigned booking engine">
+            <div class="wall-col">
+              <img src="assets/home/engine-offerings-list.png" alt="" decoding="async" />
+              <img src="assets/home/engine-service-multi-guest.png" alt="" decoding="async" />
+              <img src="assets/home/engine-confirmation.png" alt="" decoding="async" />
+            </div>
+            <div class="wall-col">
+              <img src="assets/home/engine-availability.png" alt="" decoding="async" />
+              <div class="wall-pair"><img src="assets/home/engine-availability-mobile.png" alt="" decoding="async" /><img src="assets/home/engine-service-mobile.png" alt="" decoding="async" /></div>
+              <img src="assets/home/engine-checkout.png" alt="" decoding="async" />
+            </div>
+            <div class="wall-col">
+              <img src="assets/home/engine-guest-info.png" alt="" decoding="async" />
+              <img src="assets/home/engine-offerings-book-now.png" alt="" decoding="async" />
+              <img src="assets/home/engine-choice-package.png" alt="" decoding="async" />
+            </div>
+          </div>
+        </div>
+        <div class="case-card-content">
+          <div>
+            <div class="case-card-meta">
+              <span class="tag">UX/UI Design</span>
+              <span class="tag">Booking Engine</span>
+              <span class="tag">Theming</span>
+            </div>
+            <h2>Redesigning a booking engine for hundreds of properties</h2>
+            <p>Rebuilt Agilysys's online booking experience around multi-guest booking, smart availability, and a themeable base that every property can make its own.</p>
+          </div>
+          <div class="case-card-footer">
+            <div class="case-card-stat">
+              <strong>100s</strong>of properties, one adaptable base
+            </div>
+            <span class="arrow-link">
+              Read more
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Book4Time Booking Flow (2nd) -->
       <a href="case-study-book4time.html" class="case-card">
-        <div class="case-card-visual" style="background: linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%); order: -1; min-height: 360px; position: relative; overflow: hidden;">
-          <div class="case-card-visual-inner">
-            <div style="padding:2rem;width:100%;max-width:320px;display:flex;flex-direction:column;gap:10px;">
-              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:14px;display:flex;gap:12px;">
-                <div style="flex:1;display:flex;flex-direction:column;gap:6px;">
-                  <div style="height:8px;background:rgba(255,255,255,0.4);border-radius:3px;width:70%;"></div>
-                  <div style="height:6px;background:rgba(255,255,255,0.2);border-radius:3px;width:45%;"></div>
-                  <div style="height:6px;background:rgba(74,144,217,0.5);border-radius:3px;width:30%;margin-top:2px;"></div>
-                </div>
-                <div style="width:32px;height:32px;border-radius:50%;background:rgba(74,144,217,0.5);border:1px solid rgba(74,144,217,0.7);flex-shrink:0;"></div>
-              </div>
-              <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(74,144,217,0.3);border-radius:12px;padding:14px;box-shadow:0 0 16px rgba(74,144,217,0.1);">
-                <div style="font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:8px;font-family:sans-serif;">Your itinerary</div>
-                <div style="display:flex;flex-direction:column;gap:5px;">
-                  <div style="background:rgba(74,144,217,0.15);border:1px solid rgba(74,144,217,0.25);border-radius:6px;padding:7px 9px;">
-                    <div style="font-size:8px;color:rgba(255,255,255,0.35);margin-bottom:3px;font-family:sans-serif;">Mon · 9:00am</div>
-                    <div style="height:6px;background:rgba(255,255,255,0.35);border-radius:2px;width:75%;"></div>
-                  </div>
-                  <div style="background:rgba(74,144,217,0.1);border:1px solid rgba(74,144,217,0.2);border-radius:6px;padding:7px 9px;">
-                    <div style="font-size:8px;color:rgba(255,255,255,0.35);margin-bottom:3px;font-family:sans-serif;">Tue · 2:00pm</div>
-                    <div style="height:6px;background:rgba(255,255,255,0.25);border-radius:2px;width:60%;"></div>
-                  </div>
-                </div>
-              </div>
+        <div class="case-card-visual wall-yellow" style="order: -1;">
+          <div class="screen-wall" role="img" aria-label="Screens from the multi-day booking flow">
+            <div class="wall-col">
+              <img src="assets/home/b4t-booking.png" alt="" decoding="async" loading="lazy" />
+              <img src="assets/home/b4t-checkout.png" alt="" decoding="async" loading="lazy" />
+              <img src="assets/home/b4t-reservation-details.png" alt="" decoding="async" loading="lazy" />
+            </div>
+            <div class="wall-col">
+              <img src="assets/home/b4t-summary-desktop.png" alt="" decoding="async" loading="lazy" />
+              <div class="wall-pair"><img src="assets/home/b4t-summary-mobile.png" alt="" decoding="async" loading="lazy" /><img src="assets/home/b4t-services-mobile.png" alt="" decoding="async" loading="lazy" /></div>
+              <img src="assets/home/b4t-confirmation.png" alt="" decoding="async" loading="lazy" />
+            </div>
+            <div class="wall-col">
+              <img src="assets/home/b4t-activities-desktop.png" alt="" decoding="async" loading="lazy" />
+              <div class="wall-stack"><img src="assets/home/b4t-conflict-tooltip.png" alt="" decoding="async" loading="lazy" /><img src="assets/home/b4t-conflict-cards.png" alt="" decoding="async" loading="lazy" /></div>
+              <img src="assets/home/b4t-services-desktop.png" alt="" decoding="async" loading="lazy" />
             </div>
           </div>
         </div>
@@ -565,7 +595,7 @@
               <span class="tag">Design System</span>
             </div>
             <h2>Booking flow for luxury spas and resorts</h2>
-            <p>Designed Agilysys's first multi-day booking experience — reducing errors by up to 53%, cutting support tickets by 57%, and securing a major enterprise client.</p>
+            <p>Designed Agilysys's first multi-day booking experience, reducing errors by up to 53%, cutting support tickets by 57%, and securing a major enterprise client.</p>
           </div>
           <div class="case-card-footer">
             <div class="case-card-stat">
@@ -579,10 +609,26 @@
         </div>
       </a>
 
-      <!-- Book4Time Design System (2nd) -->
+      <!-- Book4Time Design System (3rd) -->
       <a href="case-study-book4time-ds.html" class="case-card">
-        <div class="case-card-visual" style="order: -1; background: #F8F9FA; display: flex; align-items: center; justify-content: center; padding: 1.5rem;">
-          <img src="assets/book4time/Assortment of components.png" alt="Book4Time design system component library" style="width: 100%; display: block; border-radius: 6px; border: 1px solid #E5E7EB;" />
+        <div class="case-card-visual wall-blue" style="order: -1;">
+          <div class="screen-wall" role="img" aria-label="Component sheets from the Book4Time design system">
+            <div class="wall-col">
+              <img src="assets/home/ds-ds.png" alt="" decoding="async" loading="lazy" />
+              <div class="wall-stack"><img src="assets/home/ds-calendar-flow-cards.png" alt="" decoding="async" loading="lazy" /><img src="assets/home/ds-service-and-activities.png" alt="" decoding="async" loading="lazy" /></div>
+              <img src="assets/home/ds-wellness-flow.png" alt="" decoding="async" loading="lazy" />
+            </div>
+            <div class="wall-col">
+              <img src="assets/home/ds-assortment.png" alt="" decoding="async" loading="lazy" />
+              <img src="assets/home/ds-calendar.png" alt="" decoding="async" loading="lazy" />
+              <img src="assets/home/ds-cart.png" alt="" decoding="async" loading="lazy" />
+            </div>
+            <div class="wall-col">
+              <img src="assets/home/ds-top-nav.png" alt="" decoding="async" loading="lazy" />
+              <img src="assets/home/ds-button.png" alt="" decoding="async" loading="lazy" />
+              <div class="wall-stack"><img src="assets/home/ds-summary-examples.png" alt="" decoding="async" loading="lazy" /><img src="assets/home/ds-offering-details-choice-package.png" alt="" decoding="async" loading="lazy" /></div>
+            </div>
+          </div>
         </div>
         <div class="case-card-content">
           <div>
@@ -591,7 +637,7 @@
               <span class="tag">0-to-1</span>
             </div>
             <h2>Building a design system from zero at Book4Time</h2>
-            <p>Created the first design system for a luxury spa and resort platform — token architecture, component library, and governance — as sole design systems owner across 100+ enterprise properties.</p>
+            <p>Created the first design system for a luxury spa and resort platform as sole design systems owner: token architecture, component library, and governance across 100+ enterprise properties.</p>
           </div>
           <div class="case-card-footer">
             <div class="case-card-stat">
@@ -607,42 +653,11 @@
 
       <!-- Rogers -->
       <a href="case-study-rogers.html" class="case-card">
-        <div class="case-card-visual visual-rogers" style="order: -1;">
-          <div class="case-card-visual-inner">
-            <div class="visual-rogers-art">
-              <!-- Simplified purchase flow visualization -->
-              <div style="background:white;border-radius:12px;padding:16px;box-shadow:0 4px 16px rgba(0,50,80,0.1);">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-                  <div style="font-size:10px;font-weight:600;color:#1B4F72;letter-spacing:0.05em;text-transform:uppercase;font-family:sans-serif;">Rogers</div>
-                  <div style="width:16px;height:16px;background:#CC0000;border-radius:3px;"></div>
-                </div>
-                <div class="vis-card-row" style="margin-bottom:8px;">
-                  <div class="vis-mini-card">
-                    <div class="vis-card-header"></div>
-                    <div class="vis-card-body">
-                      <div class="vis-card-line"></div>
-                      <div class="vis-card-line short"></div>
-                    </div>
-                    <div class="vis-card-price"></div>
-                  </div>
-                  <div class="vis-mini-card">
-                    <div class="vis-card-header" style="background:#CC0000;"></div>
-                    <div class="vis-card-body">
-                      <div class="vis-card-line"></div>
-                      <div class="vis-card-line short"></div>
-                    </div>
-                    <div class="vis-card-price" style="background:#CC0000;"></div>
-                  </div>
-                </div>
-                <div style="background:#F0F8FF;border-radius:8px;padding:10px;display:flex;justify-content:space-between;align-items:center;">
-                  <div>
-                    <div class="vis-card-line" style="width:80px;margin-bottom:4px;"></div>
-                    <div class="vis-card-line" style="width:50px;background:#1B4F72;opacity:0.4;"></div>
-                  </div>
-                  <div style="background:#CC0000;color:white;font-size:9px;padding:4px 10px;border-radius:100px;font-family:sans-serif;font-weight:600;">Add line</div>
-                </div>
-              </div>
-            </div>
+        <div class="case-card-visual wall-sand" style="order: -1;">
+          <div class="screen-fan" role="img" aria-label="Rogers multi-line cart, flow diagram, and dependency map">
+            <img class="fan-a" src="assets/home/rogers-workshop.png" alt="" loading="lazy" decoding="async" />
+            <img class="fan-b" src="assets/home/rogers-flow.png" alt="" loading="lazy" decoding="async" />
+            <img class="fan-d" src="assets/home/rogers-cart.png" alt="" loading="lazy" decoding="async" />
           </div>
         </div>
         <div class="case-card-content">
@@ -653,7 +668,7 @@
               <span class="tag">Purchase Flow</span>
             </div>
             <h2>Multi-line purchase flow at Rogers Communications</h2>
-            <p>Redesigned the wireless purchase flow so customers could buy multiple lines in one session — eliminating the biggest drop-off point for new customers at one of Canada's largest telcos.</p>
+            <p>Redesigned the wireless purchase flow so customers could buy multiple lines in one session, removing the biggest drop-off point for new customers at one of Canada's largest telcos.</p>
           </div>
           <div class="case-card-footer">
             <div class="case-card-stat">
